@@ -1,0 +1,114 @@
+
+This file contains information about the JHU-CROWD++ (v2.0) dataset. 
+
+-----------------------------------------------------------------------------------------------------
+INTRODUCTION
+-----------------------------------------------------------------------------------------------------
+
+JHU-CROWD++ is a comprehensive dataset with 4,372 images and 1.51 million annotations. In comparison 
+to existing datasets, the proposed dataset is collected under a variety of diverse scenarios and 
+environmental conditions. In addition, the dataset provides comparatively richer set of annotations 
+like dots, approximate bounding boxes, blur levels, etc.
+
+-----------------------------------------------------------------------------------------------------
+DIRECTORY INFO
+-----------------------------------------------------------------------------------------------------
+1. The dataset directory contains 3 sub-directories: train, val and test.
+
+2. Each of these contain 2 sub-directories (images, gt) and a file "image_labels.txt".
+
+3. The "images" directory contains images and the "gt" directory contains ground-truth files 
+   corresponding to the images in the images directory.
+
+4. The number of samples in train, val and test split are 2272, 500, 1600 respectively.
+
+-----------------------------------------------------------------------------------------------------
+GROUND-TRUTH ANNOTATIONS: "HEAD-LEVEL"
+-----------------------------------------------------------------------------------------------------
+1. Each ground-truth file in the "gt" directory contains "space" separated values with each row 
+   inidacting x,y,w,h,o,b 
+
+2. x,y indicate the head location.
+
+3. w,h indicate approximate width and height of the head.
+
+4. o indicates occlusion-level and it can take 3 possible values: 1,2,3. 
+   o=1 indicates "visible"
+   o=2 indicates "partial-occlusion"
+   o=3 indicates "full-occlusion"
+   
+5. b indicates blur-level and it can take 2 possible values: 0,1. 
+   b=0 indicates no-blur 
+   b=1 indicates blur
+   
+-----------------------------------------------------------------------------------------------------
+GROUND-TRUTH ANNOTATIONS: "IMAGE-LEVEL"
+-----------------------------------------------------------------------------------------------------
+1. Each split in the dataset contains a file "image_labels.txt". This file contains image-level labels.
+
+2. The values in the file are comma separated and each row indicates: 
+	"filename, total-count, scene-type, weather-condition, distractor"
+	
+3. total-count indicates the total number of people in the image
+
+4. scene-type is an image-level label describing the scene
+
+5. weather-condition indicates the weather-degradation in the image and can take 4 values: 0,1,2,3
+   weather-condition=0 indicates "no weather degradation"
+   weather-condition=1 indicates "fog/haze"
+   weather-condition=2 indicates "rain"
+   weather-condition=3 indicates "snow"
+   
+6. distractor indicates if the image is a distractor. It can take 2 values: 0,1
+   distractor=0 indicates "not a distractor"
+   distractor=1 indicates "distractor"
+
+-----------------------------------------------------------------------------------------------------
+CITATION
+-----------------------------------------------------------------------------------------------------   
+
+If you find this dataset useful, please consider citing the following work:
+
+@inproceedings{sindagi2019pushing,
+title={Pushing the frontiers of unconstrained crowd counting: New dataset and benchmark method},
+author={Sindagi, Vishwanath A and Yasarla, Rajeev and Patel, Vishal M},
+booktitle={Proceedings of the IEEE International Conference on Computer Vision},
+pages={1221--1231},
+year={2019}
+}
+
+@article{sindagi2020jhu-crowd,
+title={JHU-CROWD++: Large-Scale Crowd Counting Dataset and A Benchmark Method},
+author={Sindagi, Vishwanath A and Yasarla, Rajeev and Patel, Vishal M},
+journal={Tech Report},
+year={2020}
+}
+
+
+-----------------------------------------------------------------------------------------------------
+LICENSE
+-----------------------------------------------------------------------------------------------------   
+
+This dataset is for academic and non-commercial uses (such as academic research, teaching, scientific 
+publications, or personal experimentation). All images of the JHU-CROWD++ are obtained from the Internet 
+which are not property of VIU-Lab, The Johns Hopkins University (JHU). please contact us if you find 
+yourself or your personal belongings in the data, and we (VIU-Lab) will immediately remove the concerned
+ images from our servers. By downloading and/or using the dataset, you acknowledge that you have read, 
+ understand, and agree to be bound by the following terms and conditions.
+
+1. All images are obtained from the Internet. We are not responsible for the content/meaning of these 
+   images.
+2. Specific care has been taken to reduce labeling errors. Nevertheless, we do not accept any responsibility 
+   for errors or omissions.
+3. You agree not to reproduce, duplicate, copy, sell, trade, resell or exploit for any commercial purposes, 
+   any portion of the images and any portion of derived data.
+4. You agree not to use the dataset or any derivative work for commercial purposes as, for example, licensing 
+   or selling the data, or using the data with a purpose to procure a commercial gain.
+5. All rights not expressly granted to you are reserved by us (VIU-Lab, JHU).
+6. You acknowledge that the dataset is a valuable scientific resource and agree to appropriately reference 
+   the following papers in any publication making use of the Data & Software:
+   Sindagi et al., "Pushing the frontiers of unconstrained crowd counting: New dataset and benchmark method", 
+   ICCV 2019.
+   Sindagi et al., "JHU-CROWD++: Large-Scale Crowd Counting Dataset and A Benchmark Method", Arxiv 2020.
+
+
