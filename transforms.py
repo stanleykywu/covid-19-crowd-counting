@@ -50,7 +50,7 @@ class CenterCrop(object):
         self.output_size = output_size
 
     def __call__(self, sample):
-        image, den, fname = sample['image'], sample['den'], sample['fname']
+        image, den, gt, fname = sample['image'], sample['den'], sample['gt'], sample['fname']
         output_w, output_h = self.output_size, self.output_size
         # Original image size
         # Crop Image
@@ -64,13 +64,21 @@ class CenterCrop(object):
         output_h = min(h, output_h)
         x1 = int(round(w - output_w) / 2.)
         y1 = int(round(h - output_h) / 2.)
+        new_gt = []
+
+        for p in gt:
+            x = p[0]
+            y = p[1]
+            if x > x1 and x < x1 + output_w and y > y1 and y < y1 + output_h:
+                new_gt.append([x - x1, y - y1])
+
         cropped_den = den[y1:y1 + output_h, x1:x1 + output_w]
         frame = np.full((self.output_size, self.output_size), 0.0)
         fx = int((self.output_size - cropped_den.shape[0])/2)
-        fy = int((self.output_size - cropped_den.shape[1])/2)        
+        fy = int((self.output_size - cropped_den.shape[1])/2)     
         frame[fx:fx+cropped_den.shape[0], fy:fy+cropped_den.shape[1]] = cropped_den[0:cropped_den.shape[0], 0:cropped_den.shape[1]]
 
-        return {"image": cropped_img, "den": frame.astype('float32'), 'fname': fname}
+        return {"image": cropped_img, "den": frame.astype('float32'), "gt": new_gt, 'fname': fname}
 
 
 class RandomFlip(object):
@@ -85,7 +93,7 @@ class RandomFlip(object):
             image = image.transpose(Image.FLIP_LEFT_RIGHT)
             den = den[:, ::-1].copy()
 
-        return {"image": image, "den": den, 'fname': fname}
+        return {"image": image, "den": den, "gt": sample['gt'], 'fname': fname}
 
 
 class RandomGamma(object):
@@ -114,7 +122,7 @@ class ToTensor(object):
         ])
 
         image = tfms(image)
-        return {"image": image, "den": den, 'fname': fname}
+        return {"image": image, "den": den, "gt": sample['gt'], 'fname': fname}
 
 
 class Normalize(object):
@@ -134,7 +142,7 @@ class Normalize(object):
         image = tfms(image)
         den = np.reshape(den, [1, *den.shape])
 
-        return {"image": image, "den": den, 'fname': fname}
+        return {"image": image, "den": den, "gt": sample['gt'], 'fname': fname}
 
 
 class ScaleDown(object):
@@ -150,7 +158,7 @@ class ScaleDown(object):
         den = cv2.resize(den, (w // self.factor, h // self.factor), interpolation=cv2.INTER_CUBIC)
 #         den = np.array(den.resize((w//self.factor, h//self.factor), Image.BICUBIC))
         # den = den * self.factor * self.factor
-        return {"image": image, "den": den, 'fname': fname}
+        return {"image": image, "den": den, "gt": sample['gt'], 'fname': fname}
 
 
 class LabelNormalize(object):
@@ -164,7 +172,7 @@ class LabelNormalize(object):
     def __call__(self, sample):
         image, den, fname = sample['image'], sample['den'], sample['fname']
         den = den * self.norm
-        return {"image": image, "den": den, 'fname': fname}
+        return {"image": image, "den": den, "gt": sample['gt'], 'fname': fname}
 
 
 class DeNormalize(object):

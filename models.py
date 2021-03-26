@@ -54,7 +54,7 @@ class ResNetTransfer(nn.Module):
         self.scale_factor = scale_factor
         
         
-        conv_layers = list(models.resnet18(pretrained=True).features.children())
+        conv_layers = list(models.resnet18(pretrained=True).children())[:-1] 
         # Mark the backbone as not trainable
         for layer in conv_layers:
             layer.requires_grad = False
@@ -92,16 +92,16 @@ class InceptionV3Transfer(nn.Module):
         self.scale_factor = scale_factor
         
         
-        conv_layers = list(models.inception_v3(pretrained=True).features.children())
+        conv_layers = list(models.inception_v3(pretrained=True).children())[:-1] 
         # Mark the backbone as not trainable
         for layer in conv_layers:
             layer.requires_grad = False
 
         self.model = nn.Sequential(
             *conv_layers,
-            nn.Conv2d(channels[0], channels[1], kernel_size=3, padding=1),
+            nn.Conv2d(channels[0], channels[1], kernel_size=5, padding=1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(channels[1], channels[2], kernel_size=3, padding=1),
+            nn.Conv2d(channels[1], channels[2], kernel_size=5, padding=1),
             nn.ReLU(inplace=True)
         )
 

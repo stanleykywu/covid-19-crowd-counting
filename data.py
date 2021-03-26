@@ -35,14 +35,16 @@ class CrowdDataSet(Dataset):
             idx = idx.tolist()
 
         image_fname = self.images[idx]
-        img = cv2.imread(self.dirname + '/images/' + image_fname)
-        print(image_fname)
+        # img = cv2.imread(self.dirname + '/images/' + image_fname)
+        # print(image_fname)
+        image = Image.open(self.dirname + '/images/' + image_fname)
+        image = image.convert('RGB')
         pts = loadmat((self.dirname + '/ground-truth/' + image_fname).replace('.jpg', '.mat').replace('images', 'ground-truth').replace('IMG_', 'GT_IMG_'))
         gt = pts["image_info"][0, 0][0, 0][0]
 
-        k = np.zeros((img.shape[0], img.shape[1]))
+        k = np.zeros((image.width, image.height))
         k = get_density_map_gaussian(k, gt, adaptive_mode=True)
-        sample = {'image': img, 'den': k, 'fname': image_fname}
+        sample = {'image': image, 'den': k, 'gt': gt, 'fname': image_fname}
 
         if self.transform:
             sample = self.transform(sample)
@@ -62,7 +64,7 @@ def default_train_transforms(output_size=448, factor=4):
     return transforms.Compose([
         CenterCrop(output_size=output_size),
         RandomFlip(),
-        # ScaleDown(factor),
+        ScaleDown(factor),
         LabelNormalize(),
         ToTensor(),
         Normalize()
