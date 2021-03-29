@@ -5,7 +5,6 @@ import torch
 from PIL import Image
 from torch.utils.data import Dataset
 from scipy.io import loadmat
-import cv2
 from utils import get_density_map_gaussian
 
 from transforms import *
@@ -35,8 +34,6 @@ class CrowdDataSet(Dataset):
             idx = idx.tolist()
 
         image_fname = self.images[idx]
-        # img = cv2.imread(self.dirname + '/images/' + image_fname)
-        # print(image_fname)
         image = Image.open(self.dirname + '/images/' + image_fname)
         image = image.convert('RGB')
         pts = loadmat((self.dirname + '/ground-truth/' + image_fname).replace('.jpg', '.mat').replace('images', 'ground-truth').replace('IMG_', 'GT_IMG_'))

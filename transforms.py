@@ -8,35 +8,6 @@ from torchvision import transforms
 
 # Custom Transforms to Handle Image an Density Map
 
-
-class CenterCropOld(object):
-    """ Centercrop image and density map
-
-    Args:
-        scale (tuple): Desired scale to apply before resizing
-        output_size (int): Required crop size
-
-    """
-
-    def __init__(self, output_size=224):
-        self.output_size = output_size
-
-    def __call__(self, sample):
-        image, den, fname = sample['image'], sample['den'], sample['fname']
-
-        # Original image size
-        w, h = image.size
-        left = int(round(w - self.output_size) / 2.)
-        top = int(round(h - self.output_size) / 2.)
-        right = int(round(w + self.output_size) / 2.)
-        bottom = int(round(h + self.output_size) / 2.)
-    
-        # image = image.crop((x1, y1, x1 + self.output_size, y1 + self.output_size))
-        # den = den[y1:y1 + self.output_size, x1:x1 + self.output_size]
-        image = image.crop((left, top, right, bottom))
-        den = den[top:bottom, left:right]
-        return {"image": image, "den": den, 'fname': fname}
-
 class CenterCrop(object):
     """ Centercrop image and density map
 
@@ -66,6 +37,7 @@ class CenterCrop(object):
         y1 = int(round(h - output_h) / 2.)
         new_gt = []
 
+        # Crop ground truths
         for p in gt:
             x = p[0]
             y = p[1]
