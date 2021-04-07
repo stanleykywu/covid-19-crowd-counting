@@ -3,6 +3,7 @@ from data import default_train_transforms
 from torchvision import transforms
 from PIL import Image
 from utils import get_density_map_gaussian
+import numpy as np
 
 from models import VGG16Transfer, ResNetTransfer, InceptionV3Transfer
 from trainer import train, trainInception
@@ -24,5 +25,6 @@ criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-train(model, loaders['train'], criterion, optimizer, 500)
-torch.save(model, 'saved_models/resnet18')
+losses = train(model, loaders['train'], criterion, optimizer, 500)
+torch.save(model, 'saved_models/resnet18_only_crop')
+np.save(f"loss_experiments/resnet18_losses", (losses))

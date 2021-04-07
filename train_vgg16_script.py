@@ -9,6 +9,7 @@ from trainer import train, trainInception
 import torch.optim as optim
 import torch.nn as nn
 import torch
+import numpy as np
 
 loaders = {
     "train": CrowdDataSet(
@@ -24,5 +25,7 @@ criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-train(model, loaders['train'], criterion, optimizer, 500)
-torch.save(model, 'saved_models/vgg16')
+losses = train(model, loaders['train'], criterion, optimizer, 500)
+torch.save(model, 'saved_models/vgg16_only_crop')
+np.save(f"loss_experiments/vgg16_losses", (losses))
+

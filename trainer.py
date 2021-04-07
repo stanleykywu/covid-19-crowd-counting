@@ -2,6 +2,7 @@ import torch
 import numpy as np
 
 def train(model, trainloader, criterion, optimizer, epochs):
+    losses = []
     for epoch in range(epochs):  # loop over the dataset multiple times
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
@@ -23,10 +24,9 @@ def train(model, trainloader, criterion, optimizer, epochs):
 
             # print statistics
             running_loss += loss.item()
-            if i % 5 == 0:    # print every 5 mini-batches
-                print('[%d, %5d] loss: %.3f' %
-                    (epoch + 1, i + 1, running_loss / 5))
-                running_loss = 0.0
+        losses.append(running_loss)
+        running_loss = 0.0
+    return losses
 
 def trainInception(model, trainloader, criterion, optimizer, epochs):
     for epoch in range(epochs):  # loop over the dataset multiple times
