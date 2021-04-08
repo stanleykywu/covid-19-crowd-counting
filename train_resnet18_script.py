@@ -25,6 +25,6 @@ criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-losses = train(model, loaders['train'], criterion, optimizer, 500)
-torch.save(model, 'saved_models/resnet18_only_crop')
+losses = train(model, loaders['train'], criterion, optimizer, 700)
+torch.save(model, 'saved_models/resnet18')
 np.save(f"loss_experiments/resnet18_losses", (losses))
