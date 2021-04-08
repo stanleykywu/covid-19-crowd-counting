@@ -60,11 +60,11 @@ def default_train_transforms(output_size=448, factor=4):
     """
     return transforms.Compose([
         CenterCrop(output_size=output_size),
-        # RandomFlip(),
-        # ScaleDown(factor),
-        # LabelNormalize(),
+        RandomFlip(),
+        ScaleDown(factor),
+        LabelNormalize(),
         ToTensor(),
-        # Normalize()
+        Normalize()
     ])
 
 
