@@ -79,40 +79,32 @@ class ResNetTransfer(nn.Module):
         output = F.upsample(output, scale_factor=self.scale_factor)
         return output
 
-
-class InceptionV3Transfer(nn.Module):
-    def __init__(self, channels=[192, 96, 1], scale_factor=4):
+class ResNet18Classification(nn.Module):
+    def __init__(self, bins=5):
         """
         Parameters
         ----------
         channels: Input channel size for all three layers
         scale_factor: Factor to upsample the feature map
         """
-        super(InceptionV3Transfer, self).__init__()
-        self.scale_factor = scale_factor
+        super(ResNet18Classification, self).__init__()
+        self.bins = bins
         
         
-        conv_layers = list(models.inception_v3(pretrained=True).children())[0:19] 
-        # Mark the backbone as not trainable
-        for layer in conv_layers:
-            layer.requires_grad = False
-
-        self.model = nn.Sequential(
-            *conv_layers,
-            nn.Conv2d(channels[0], channels[1], kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(channels[1], channels[2], kernel_size=3, padding=1),
-            nn.ReLU(inplace=True)
+        model_ft = models.resnet18(pretrained=True)
+        num_ftrs = model_ft.fc.in_features
+        
+        model_ft.fc = nn.Sequential(
+            nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
+            nn.ReLU(),
+            nn.Linear(in_features=4096, out_features=4096, bias=True),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            nn.Linear(in_features=4096, out_features=self.bins, bias=True),
+            nn.Softmax()
         )
 
+        self.model = model_ft
     
     def forward(self, inputs):
-        """ Forward pass
-
-        Parameters
-        ----------
-        inputs: Batch of input images
-        """
-        output = self.model(inputs)
-        output = F.upsample(output, scale_factor=self.scale_factor)
-        return output
+        return self.model(inputs)
