@@ -24,10 +24,10 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
 
             # print statistics
             running_loss += loss.item()
-            print(loss.item())
             print(outputs, expected)
         losses.append(running_loss)
-        running_loss = 0.0
+        print(running_loss)
+        
     return losses
 
 def train(model, trainloader, criterion, optimizer, epochs):
