@@ -1,8 +1,8 @@
-from data import CrowdDataSet 
+from data import CrowdClassificationDataSet 
 import matplotlib.pyplot as plt
 import numpy as np
 from data import CrowdDataSet 
-from data import default_train_transforms, default_test_transforms
+from data import default_train_transform_classification
 import torch
 
 loaders = {
