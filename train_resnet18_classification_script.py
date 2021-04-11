@@ -19,8 +19,9 @@ loaders = {
 
 model = ResNet18Classification()
 criterion = nn.NLLLoss()
-lr = 1e-4
-optimizer = optim.Adam(model.parameters(), lr=lr)
+lr = 1e-3
+momentum = 0.9
+optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
 
 losses = train_classification(model, loaders['train'], criterion, optimizer, 700)
 torch.save(model, 'saved_models/vgg16_classification')
