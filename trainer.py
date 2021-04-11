@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+from sklearn.metrics import r2_score
 
 def train_classification(model, trainloader, criterion, optimizer, epochs):
     losses = []
@@ -28,17 +29,19 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
             # print statistics
             running_loss += loss.item()
             running_correct += torch.sum(preds == bin)
+            
         losses.append(running_loss)
         accuracies.append(running_correct / len(trainloader))
-        print(running_loss)
-        print(accuracies[-1])
         
-    return losses
+    return losses, accuracies
 
 def train(model, trainloader, criterion, optimizer, epochs):
     losses = []
+    r2 = []
     for epoch in range(epochs):  # loop over the dataset multiple times
         running_loss = 0.0
+        running_expected = []
+        running_predicted = []
         for i, data in enumerate(trainloader, 0):
             model.train()
             # get the inputs; data is a list of [inputs, labels]
@@ -58,6 +61,12 @@ def train(model, trainloader, criterion, optimizer, epochs):
 
             # print statistics
             running_loss += loss.item()
+            prediction = outputs.squeeze().data.cpu().numpy() 
+            count = np.sum(prediction) / 100
+            running_predicted.append(count)
+            running_expected.append(len(dt['gt']))
+
         losses.append(running_loss)
-        running_loss = 0.0
-    return losses
+        r2.append(r2_score(running_expected, running_predicted))
+
+    return losses, r2
