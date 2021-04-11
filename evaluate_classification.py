@@ -29,7 +29,8 @@ for i, data in enumerate(loaders['train'], 0):
     model.eval()
     predictions = model(image[None, ...].float())
     print(predictions, bin)
-    print(np.argmax(predictions.numpy()))
+    predictions = np.array([x for x in predictions])
+    print(np.argmax(predictions))
         
     train_vgg16_predictions.append(0)
     train_vgg16_actual.append(0)
