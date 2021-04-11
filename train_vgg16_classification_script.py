@@ -1,4 +1,4 @@
-from data import CrowdDataSet, CrowdClassificationDataSet, default_test_transforms, default_train_transform_classification
+from data import CrowdDataSet, CrowdClassificationDataSet, default_val_transform_classification, default_train_transform_classification
 from data import default_train_transforms
 
 from models import VGG16Classification
@@ -13,7 +13,7 @@ loaders = {
         'part_A/train_data', default_train_transform_classification()
     ),
     "val": CrowdClassificationDataSet(
-        'part_A/test_data', default_train_transform_classification()
+        'part_A/test_data', default_val_transform_classification()
     )
 }
 
@@ -24,7 +24,7 @@ momentum = 0.9
 optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
 # optimizer = optim.Adam(model.parameters())
 
-losses, accuracies = train_classification(model, loaders['train'], criterion, optimizer, 700)
+train_losses, train_accuracies, val_losses, val_accuracies = train_classification(model, loaders, criterion, optimizer, 700)
 torch.save(model, 'saved_models/vgg16_classification')
-np.save(f"loss_experiments/vgg16_classification_losses", (losses, accuracies))
+np.save(f"loss_experiments/vgg16_classification_losses", (train_losses, train_accuracies, val_losses, val_accuracies))
 

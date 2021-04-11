@@ -100,6 +100,14 @@ def default_train_transforms(output_size=224):
         Normalize()
     ])
 
+def default_val_transforms(output_size=224):
+    return transforms.Compose([
+        CenterCrop(output_size=output_size),
+        LabelNormalize(),
+        ToTensor(),
+        Normalize()
+    ])
+
 def default_train_transform_classification(output_size=224):
     return transforms.Compose([
         CenterCrop(output_size=output_size, bins=True),
@@ -108,11 +116,10 @@ def default_train_transform_classification(output_size=224):
         Normalize(bins=True)
     ])
 
-
-def default_test_transforms(output_size=224):
+def default_val_transform_classification(output_size=224):
     return transforms.Compose([
-        CenterCrop(output_size=output_size),
-        LabelNormalize(),
+        CenterCrop(output_size=output_size, bins=True),
         ToTensor(),
-        Normalize()
+        Normalize(bins=True)
     ])
+
