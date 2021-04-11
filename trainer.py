@@ -3,8 +3,10 @@ import numpy as np
 
 def train_classification(model, trainloader, criterion, optimizer, epochs):
     losses = []
+    accuracies = []
     for epoch in range(epochs):  # loop over the dataset multiple times
         running_loss = 0.0
+        running_correct = 0
         for i, data in enumerate(trainloader, 0):
             model.train()
             dt = data
@@ -18,15 +20,18 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
             # forward + backward + optimize
             outputs = model(image[None, ...].float())
             expected = torch.Tensor([bin]).type(torch.LongTensor)
+            _, preds = torch.max(outputs, 1)
             loss = criterion(outputs, expected)
             loss.backward()
             optimizer.step()
 
             # print statistics
             running_loss += loss.item()
-            # print(outputs, expected)
+            running_correct += torch.sum(preds == bin)
         losses.append(running_loss)
+        accuracies.append(running_correct / len(trainloader))
         print(running_loss)
+        print(accuracies)
         
     return losses
 
