@@ -22,7 +22,7 @@ criterion = nn.CrossEntropyLoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-losses = train_classification(model, loaders['train'], criterion, optimizer, 1)
+losses = train_classification(model, loaders['train'], criterion, optimizer, 700)
 torch.save(model, 'saved_models/vgg16_classification')
 np.save(f"loss_experiments/vgg16_classification_losses", (losses))
 
