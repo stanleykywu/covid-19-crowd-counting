@@ -129,7 +129,7 @@ class VGG16Classification(nn.Module):
         
         
         model_ft = models.vgg16(pretrained=True)
-        num_ftrs = model_ft.fc.in_features
+        num_ftrs = 512 * 7 * 7
         
         model_ft.fc = nn.Sequential(
             nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
