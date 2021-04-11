@@ -32,7 +32,7 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
 
         losses.append(running_loss)
         accuracies.append(running_correct / len(trainloader))
-        print('Epoch: {}, loss: {}, training acc: {}'.format(losses[-1], accuracies[-1]))
+        print('Epoch: {}, loss: {}, training acc: {}'.format(epoch, losses[-1], accuracies[-1]))
         
     return losses, accuracies
 
@@ -69,6 +69,6 @@ def train(model, trainloader, criterion, optimizer, epochs):
 
         losses.append(running_loss)
         r2.append(r2_score(running_expected, running_predicted))
-        print('Epoch: {}, loss: {}, r2: {}'.format(losses[-1], r2[-1]))
+        print('Epoch: {}, loss: {}, r2: {}'.format(epoch, losses[-1], r2[-1]))
 
     return losses, r2
