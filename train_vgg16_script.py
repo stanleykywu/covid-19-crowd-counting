@@ -21,7 +21,7 @@ criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-losses = train(model, loaders['train'], criterion, optimizer, 700)
+losses, r2 = train(model, loaders['train'], criterion, optimizer, 700)
 torch.save(model, 'saved_models/vgg16_adaptive')
-np.save(f"loss_experiments/vgg16_losses_adaptive", (losses))
+np.save(f"loss_experiments/vgg16_losses_adaptive", (losses, r2))
 

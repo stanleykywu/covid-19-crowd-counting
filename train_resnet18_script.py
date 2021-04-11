@@ -21,6 +21,6 @@ criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-losses = train(model, loaders['train'], criterion, optimizer, 700)
+losses, r2 = train(model, loaders['train'], criterion, optimizer, 700)
 torch.save(model, 'saved_models/resnet18_adaptive')
-np.save(f"loss_experiments/resnet18_adaptive_losses", (losses))
+np.save(f"loss_experiments/resnet18_adaptive_losses", (losses, r2))
