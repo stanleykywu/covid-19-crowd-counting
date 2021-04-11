@@ -21,8 +21,8 @@ model = ResNet18Classification()
 criterion = nn.CrossEntropyLoss()
 lr = 1e-3
 momentum = 0.9
-# optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
-optimizer = optim.Adam(model.parameters())
+optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
+# optimizer = optim.Adam(model.parameters())
 
 losses = train_classification(model, loaders['train'], criterion, optimizer, 700)
 torch.save(model, 'saved_models/vgg16_classification')
