@@ -58,7 +58,7 @@ def train_classification(model, loader, criterion, optimizer, epochs):
         val_accuracies.append(val_running_correct / len(loader['train']))
 
         print('Epoch: {}, training loss: {}, training acc: {}'.format(epoch, train_losses[-1], train_accuracies[-1]))
-        print('\t validation loss: {}, validation acc: {}'.format(epoch, val_losses[-1], val_accuracies[-1]))
+        print('\t validation loss: {}, validation acc: {}'.format(val_losses[-1], val_accuracies[-1]))
         
     return train_losses, train_accuracies, val_losses, val_accuracies
 
@@ -123,6 +123,6 @@ def train(model, loader, criterion, optimizer, epochs):
         val_r2.append(r2_score(val_running_expected, val_running_predicted))
 
         print('Epoch: {}, training loss: {}, training r2: {}'.format(epoch, train_losses[-1], train_r2[-1]))
-        print('\t validation loss: {}, validation r2: {}'.format(epoch, val_losses[-1], val_r2[-1]))
+        print('\t validation loss: {}, validation r2: {}'.format(val_losses[-1], val_r2[-1]))
 
     return train_losses, train_r2, val_losses, val_r2
