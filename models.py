@@ -43,7 +43,7 @@ class VGG16Transfer(nn.Module):
 
 
 class ResNetTransfer(nn.Module):
-    def __init__(self, channels=[512, 128, 1], scale_factor=4):
+    def __init__(self, channels=[512, 384, 256, 192, 128, 64, 1], scale_factor=4):
         """
         Parameters
         ----------
@@ -64,6 +64,14 @@ class ResNetTransfer(nn.Module):
             nn.Conv2d(channels[0], channels[1], kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv2d(channels[1], channels[2], kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(channels[2], channels[3], kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(channels[3], channels[4], kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(channels[4], channels[5], kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(channels[5], channels[6], kernel_size=3, padding=1),
             nn.ReLU(inplace=True)
         )
 
@@ -101,7 +109,6 @@ class ResNet18Classification(nn.Module):
             nn.ReLU(),
             nn.Dropout(p=0.5),
             nn.Linear(in_features=4096, out_features=self.bins, bias=True),
-            # nn.LogSoftmax()
         )
 
         self.model = model_ft
