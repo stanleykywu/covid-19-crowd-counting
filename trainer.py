@@ -55,7 +55,7 @@ def train_classification(model, loader, criterion, optimizer, epochs):
             val_running_correct += torch.sum(preds == bin)
     
         val_losses.append(val_running_loss)
-        val_accuracies.append(val_running_correct / len(loader['train']))
+        val_accuracies.append(val_running_correct / len(loader['val']))
 
         print('Epoch: {}, training loss: {}, training acc: {}'.format(epoch, train_losses[-1], train_accuracies[-1]))
         print('\t validation loss: {}, validation acc: {}'.format(val_losses[-1], val_accuracies[-1]))
