@@ -98,8 +98,11 @@ class ResNet18Classification(nn.Module):
         super(ResNet18Classification, self).__init__()
         self.bins = bins
         
-        
         model_ft = models.resnet18(pretrained=True)
+
+        for param in model_ft.parameters():
+            param.requires_grad = False
+
         num_ftrs = model_ft.fc.in_features
         
         model_ft.fc = nn.Sequential(
@@ -127,11 +130,13 @@ class VGG16Classification(nn.Module):
         super(VGG16Classification, self).__init__()
         self.bins = bins
         
-        
         model_ft = models.vgg16(pretrained=True)
         num_ftrs = 512 * 7 * 7
+
+        for param in model_ft.parameters():
+            param.requires_grad = False
         
-        model_ft.fc = nn.Sequential(
+        model_ft.classifier[6] = nn.Sequential(
             nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
             nn.ReLU(),
             nn.Linear(in_features=4096, out_features=4096, bias=True),
