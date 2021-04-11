@@ -137,6 +137,11 @@ class VGG16Classification(nn.Module):
         for param in model_ft.parameters():
             param.requires_grad = False
         
+        model_ft.classifier[6] = nn.Sequential(
+                            nn.Linear(4096, self.bins))
+        for param in model_ft.classifier[6].parameters():
+            param.requires_grad = True
+
         # model_ft.classifier[6] = nn.Sequential(
         #     nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
         #     nn.ReLU(),
@@ -145,7 +150,7 @@ class VGG16Classification(nn.Module):
         #     nn.Dropout(p=0.5),
         #     nn.Linear(in_features=4096, out_features=self.bins, bias=True),
         # )
-        model_ft.classifier[6].out_features = self.bins
+        # model_ft.classifier[6].out_features = self.bins
 
         self.model = model_ft
     
