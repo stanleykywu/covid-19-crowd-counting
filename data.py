@@ -54,7 +54,8 @@ class CrowdClassificationDataSet(Dataset):
         self.images = os.listdir(dirname + '/images')
         self.length = len(self.images)
         self.transform = transform
-        self.bins = [0., 36.00000127, 91.99999237, 805.00012207]
+        self.bins = [  0.        ,  20.        ,  42.60000153,  71.79999847,
+        129.2       , 804.99993896]
 
     def __len__(self):
         return self.length
@@ -76,12 +77,13 @@ class CrowdClassificationDataSet(Dataset):
 
         k = np.zeros((224, 224))
         k = get_density_map_gaussian(k, sample['gt'], adaptive_mode=False)
-        num = np.sum(self.bins)
+        num = np.sum(k)
         category = 4
         for i, bin in enumerate(self.bins):
             if num <= bin:
-                category = i
-        sample = {'image': sample['image'], 'bin': category, 'fname': image_fname}
+                category = i - 1
+                break
+        sample = {'image': sample['image'], 'bin': category, 'num': num, 'fname': image_fname}
 
         return sample
 
