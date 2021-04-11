@@ -6,11 +6,11 @@ from data import default_train_transforms, default_test_transforms
 import torch
 
 loaders = {
-    "train": CrowdDataSet(
-        'part_A/train_data', default_train_transforms()
+    "train": CrowdClassificationDataSet(
+        'part_A/train_data', default_train_transform_classification()
     ),
-    "val": CrowdDataSet(
-        'part_A/test_data', default_test_transforms()
+    "val": CrowdClassificationDataSet(
+        'part_A/test_data', default_train_transform_classification()
     )
 }
 
