@@ -132,19 +132,20 @@ class VGG16Classification(nn.Module):
         
         model_ft = models.vgg16(pretrained=True)
         # num_ftrs = 512 * 7 * 7
-        num_ftrs = 1
+        # num_ftrs = 1
 
         for param in model_ft.parameters():
             param.requires_grad = False
         
-        model_ft.classifier[6] = nn.Sequential(
-            nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
-            nn.ReLU(),
-            nn.Linear(in_features=4096, out_features=4096, bias=True),
-            nn.ReLU(),
-            nn.Dropout(p=0.5),
-            nn.Linear(in_features=4096, out_features=self.bins, bias=True),
-        )
+        # model_ft.classifier[6] = nn.Sequential(
+        #     nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
+        #     nn.ReLU(),
+        #     nn.Linear(in_features=4096, out_features=4096, bias=True),
+        #     nn.ReLU(),
+        #     nn.Dropout(p=0.5),
+        #     nn.Linear(in_features=4096, out_features=self.bins, bias=True),
+        # )
+        model_ft.classifier[6].out_features = self.bins
 
         self.model = model_ft
     
