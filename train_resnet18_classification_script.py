@@ -19,7 +19,7 @@ loaders = {
 
 model = ResNet18Classification()
 criterion = nn.CrossEntropyLoss()
-lr = 1e-2
+lr = 1e-3
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
 losses = train_classification(model, loaders['train'], criterion, optimizer, 700)
