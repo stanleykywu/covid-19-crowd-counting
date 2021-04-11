@@ -1,7 +1,7 @@
 from data import CrowdDataSet, CrowdClassificationDataSet, default_test_transforms, default_train_transform_classification
 from data import default_train_transforms
 
-from models import ResNet18Classification
+from models import VGG16Classification
 from trainer import train, train_classification
 import torch.optim as optim
 import torch.nn as nn
@@ -17,7 +17,7 @@ loaders = {
     )
 }
 
-model = ResNet18Classification()
+model = VGG16Classification()
 criterion = nn.CrossEntropyLoss()
 lr = 1e-3
 momentum = 0.9
@@ -25,6 +25,6 @@ optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
 # optimizer = optim.Adam(model.parameters())
 
 losses, accuracies = train_classification(model, loaders['train'], criterion, optimizer, 700)
-torch.save(model, 'saved_models/resnet18_classification')
-np.save(f"loss_experiments/resnet18_classification_losses", (losses, accuracies))
+torch.save(model, 'saved_models/vgg16_classification')
+np.save(f"loss_experiments/vgg16_classification_losses", (losses, accuracies))
 

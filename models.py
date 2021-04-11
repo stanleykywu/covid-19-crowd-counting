@@ -115,3 +115,32 @@ class ResNet18Classification(nn.Module):
     
     def forward(self, inputs):
         return self.model(inputs)
+
+class VGG16Classification(nn.Module):
+    def __init__(self, bins=5):
+        """
+        Parameters
+        ----------
+        channels: Input channel size for all three layers
+        scale_factor: Factor to upsample the feature map
+        """
+        super(VGG16Classification, self).__init__()
+        self.bins = bins
+        
+        
+        model_ft = models.vgg16(pretrained=True)
+        num_ftrs = model_ft.fc.in_features
+        
+        model_ft.fc = nn.Sequential(
+            nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
+            nn.ReLU(),
+            nn.Linear(in_features=4096, out_features=4096, bias=True),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
+            nn.Linear(in_features=4096, out_features=self.bins, bias=True),
+        )
+
+        self.model = model_ft
+    
+    def forward(self, inputs):
+        return self.model(inputs)
