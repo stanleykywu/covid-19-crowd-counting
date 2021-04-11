@@ -28,10 +28,11 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
             # print statistics
             running_loss += loss.item()
             running_correct += torch.sum(preds == bin)
+            print(preds, bin, running_correct)
         losses.append(running_loss)
         accuracies.append(running_correct / len(trainloader))
         print(running_loss)
-        print(accuracies)
+        print(accuracies[-1])
         
     return losses
 
