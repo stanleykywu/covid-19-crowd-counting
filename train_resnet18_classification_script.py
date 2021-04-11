@@ -18,7 +18,7 @@ loaders = {
 }
 
 model = ResNet18Classification()
-criterion = nn.CrossEntropyLoss()
+criterion = nn.NLLLoss()
 lr = 1e-4
 optimizer = optim.Adam(model.parameters(), lr=lr)
 

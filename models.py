@@ -101,7 +101,7 @@ class ResNet18Classification(nn.Module):
             nn.ReLU(),
             nn.Dropout(p=0.5),
             nn.Linear(in_features=4096, out_features=self.bins, bias=True),
-            nn.Softmax()
+            nn.LogSoftmax()
         )
 
         self.model = model_ft
