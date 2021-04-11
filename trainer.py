@@ -18,8 +18,8 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
             # forward + backward + optimize
             outputs = model(image[None, ...].float())
             expected = torch.Tensor([bin]).type(torch.LongTensor)
-            print(outputs, expected)
             loss = criterion(outputs, expected)
+            print(loss)
             loss.backward()
             optimizer.step()
 
