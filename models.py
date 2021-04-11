@@ -131,7 +131,8 @@ class VGG16Classification(nn.Module):
         self.bins = bins
         
         model_ft = models.vgg16(pretrained=True)
-        num_ftrs = 512 * 7 * 7
+        # num_ftrs = 512 * 7 * 7
+        num_ftrs = 1
 
         for param in model_ft.parameters():
             param.requires_grad = False
