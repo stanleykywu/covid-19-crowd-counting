@@ -29,9 +29,10 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
             # print statistics
             running_loss += loss.item()
             running_correct += torch.sum(preds == bin)
-            
+
         losses.append(running_loss)
         accuracies.append(running_correct / len(trainloader))
+        print('Epoch: {}, loss: {}, training acc: {}'.format(losses[-1], accuracies.append(running_correct / len(trainloader))[-1]))
         
     return losses, accuracies
 
@@ -68,5 +69,6 @@ def train(model, trainloader, criterion, optimizer, epochs):
 
         losses.append(running_loss)
         r2.append(r2_score(running_expected, running_predicted))
+        print('Epoch: {}, loss: {}, r2: {}'.format(running_loss[-1], running_predicted[-1]))
 
     return losses, r2
