@@ -18,7 +18,7 @@ loaders = {
 }
 
 model = ResNet18Classification()
-criterion = nn.NLLLoss()
+criterion = nn.CrossEntropyLoss()
 lr = 1e-3
 momentum = 0.9
 optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
