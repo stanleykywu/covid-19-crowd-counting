@@ -80,6 +80,9 @@ class CrowdClassificationDataSet(Dataset):
         num = np.sum(k)
         category = 4
         for i, bin in enumerate(self.bins):
+            if num == 0:
+                category = 0
+                break
             if num <= bin:
                 category = i - 1
                 break
