@@ -24,7 +24,7 @@ def train_classification(model, trainloader, criterion, optimizer, epochs):
 
             # print statistics
             running_loss += loss.item()
-            print(outputs, expected)
+            # print(outputs, expected)
         losses.append(running_loss)
         print(running_loss)
         
