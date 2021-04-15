@@ -10,17 +10,7 @@ from utils import get_density_map_gaussian
 from transforms import *
 
 class CrowdDataSet(Dataset):
-    """Crowd-Couting dataset Loader"""
-
     def __init__(self, dirname, transform=None):
-        """
-        Parameters
-        ----------
-        dirname: Location of image folder (i.e /path/to/train, /path/to/val)
-        transform: List of Transforms (default: None)
-        debug: Prints out additional message in debug mode (default: False)
-        sample_images: Use the List of images instead of reading from dirname
-        """
         self.dirname = dirname
         self.images = os.listdir(dirname + '/images')
         self.length = len(self.images)

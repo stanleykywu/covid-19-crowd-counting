@@ -1,36 +1,44 @@
-from data import CrowdClassificationDataSet 
 import matplotlib.pyplot as plt
 import numpy as np
-from data import CrowdDataSet 
-from data import default_train_transform_classification
-import torch
+import matplotlib.pyplot as plt
 
-loaders = {
-    "train": CrowdClassificationDataSet(
-        'part_A/train_data', default_train_transform_classification()
-    ),
-    "val": CrowdClassificationDataSet(
-        'part_A/test_data', default_train_transform_classification()
-    )
-}
+dt = np.load('loss_experiments/vgg16_classification_losses.npy')
+(train_losses, train_accuracies, val_losses, val_accuracies) = dt
+x_data = np.arange(700)
 
-model = torch.load('saved_models/vgg16_classification')
-model.eval()
+plt.plot(x_data, train_losses, label='Training CrossEntropy Loss')
+plt.plot(x_data, val_losses, label='Validation CrossEntropy Loss')
+plt.legend()
+plt.xlabel('Number of Epochs')
+plt.ylabel('Loss')
+plt.savefig('loss_experiments/vgg16_loss_plots')
 
-train_vgg16_predictions = []
-train_vgg16_actual = []
+plt.close()
+plt.plot(x_data, train_accuracies, label='Training Set Accuracy')
+plt.plot(x_data, val_accuracies, label='Validation Set Accuracy')
+plt.legend()
+plt.xlabel('Number of Epochs')
+plt.ylabel('Accuracy')
+plt.savefig('loss_experiments/vgg16_accuracy_plots')
 
-for i, data in enumerate(loaders['train'], 0):
-    dt = data
 
-    image = dt['image'].to()
-    bin = dt['bin']
-    
-    model.eval()
-    predictions = model(image[None, ...].float())
-    predictions = np.array([x for x in predictions])
-    print(predictions, bin)
-    print('prediction: {}'.format(np.argmax(predictions)))
-        
-    train_vgg16_predictions.append(np.argmax(predictions))
-    train_vgg16_actual.append(bin)
+dt = np.load('loss_experiments/resnet50_classification_losses.npy')
+(train_losses, train_accuracies, val_losses, val_accuracies) = dt
+x_data = np.arange(700)
+
+plt.close()
+plt.plot(x_data, train_losses, label='Training CrossEntropy Loss')
+plt.plot(x_data, val_losses, label='Validation CrossEntropy Loss')
+plt.legend()
+plt.xlabel('Number of Epochs')
+plt.ylabel('Loss')
+plt.savefig('loss_experiments/resnet50_loss_plots')
+
+
+plt.close()
+plt.plot(x_data, train_accuracies, label='Training Set Accuracy')
+plt.plot(x_data, val_accuracies, label='Validation Set Accuracy')
+plt.legend()
+plt.xlabel('Number of Epochs')
+plt.ylabel('Accuracy')
+plt.savefig('loss_experiments/resnet50_accuracy_plots')

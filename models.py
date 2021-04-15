@@ -87,18 +87,12 @@ class ResNetTransfer(nn.Module):
         output = F.upsample(output, scale_factor=self.scale_factor)
         return output
 
-class ResNet18Classification(nn.Module):
+class ResNetClassification(nn.Module):
     def __init__(self, bins=5):
-        """
-        Parameters
-        ----------
-        channels: Input channel size for all three layers
-        scale_factor: Factor to upsample the feature map
-        """
-        super(ResNet18Classification, self).__init__()
+        super(ResNetClassification, self).__init__()
         self.bins = bins
         
-        model_ft = models.resnet18(pretrained=True)
+        model_ft = models.resnext50_32x4d(pretrained=True)
 
         for param in model_ft.parameters():
             param.requires_grad = False
@@ -121,12 +115,6 @@ class ResNet18Classification(nn.Module):
 
 class VGG16Classification(nn.Module):
     def __init__(self, bins=5):
-        """
-        Parameters
-        ----------
-        channels: Input channel size for all three layers
-        scale_factor: Factor to upsample the feature map
-        """
         super(VGG16Classification, self).__init__()
         self.bins = bins
         
@@ -135,9 +123,6 @@ class VGG16Classification(nn.Module):
 
         for param in model_ft.parameters():
             param.requires_grad = False
-        
-        # model_ft.classifier[6] = nn.Sequential(
-        #                     nn.Linear(4096, self.bins))
         
         model_ft.classifier[6] = nn.Sequential(
             nn.Linear(in_features=num_ftrs, out_features=4096, bias=True),
