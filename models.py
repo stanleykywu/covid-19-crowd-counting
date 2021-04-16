@@ -147,19 +147,27 @@ class BaselineClassification(nn.Module):
         self.bins = bins
 
         self.cnn_layers = nn.Sequential(
-            nn.Conv2d(1, 4, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(3, 6, kernel_size=3, stride=1),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(4, 4, kernel_size=3, stride=1, padding=1),
+            nn.MaxPool2d(kernel_size=2, stride=2, padding=1),
+            nn.Conv2d(6, 3, kernel_size=3, stride=1),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
 
         self.linear_layers = nn.Sequential(
-            nn.Linear(in_features=196, out_features=98, bias=True),
+            nn.Linear(in_features=9075, out_features=4000, bias=True),
             nn.ReLU(),
+            nn.Linear(in_features=4000, out_features=2000, bias=True),
+            nn.ReLU(),
+            nn.Linear(in_features=2000, out_features=98, bias=True),
+            nn.ReLU(),
+            nn.Dropout(p=0.5),
             nn.Linear(in_features=98, out_features=self.bins, bias=True),
         )
     
     def forward(self, inputs):
-        return self.model(inputs)
+        x = self.cnn_layers(inputs)
+        x = x.view(x.size(0), -1)
+        x = self.linear_layers(x)
+        return x
