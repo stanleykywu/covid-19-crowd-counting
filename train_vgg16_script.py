@@ -23,5 +23,5 @@ optimizer = optim.Adam(model.parameters(), lr=lr)
 
 train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 700)
 torch.save(model, 'saved_models/vgg16_adaptive')
-np.save(f"loss_experiments/vgg16_losses_adaptive_final", (train_losses, train_r2, val_losses, val_r2))
+# np.save(f"loss_experiments/vgg16_losses_adaptive_final", (train_losses, train_r2, val_losses, val_r2))
 
