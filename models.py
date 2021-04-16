@@ -140,3 +140,26 @@ class VGG16Classification(nn.Module):
     
     def forward(self, inputs):
         return self.model(inputs)
+
+class BaselineClassification(nn.Module):
+    def __init__(self, bins=5):
+        super(BaselineClassification, self).__init__()
+        self.bins = bins
+
+        self.cnn_layers = nn.Sequential(
+            nn.Conv2d(1, 4, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(4, 4, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+        )
+
+        self.linear_layers = nn.Sequential(
+            nn.Linear(in_features=196, out_features=98, bias=True),
+            nn.ReLU(),
+            nn.Linear(in_features=98, out_features=self.bins, bias=True),
+        )
+    
+    def forward(self, inputs):
+        return self.model(inputs)

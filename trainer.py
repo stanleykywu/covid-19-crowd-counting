@@ -35,6 +35,10 @@ def train_classification(model, loader, criterion, optimizer, epochs):
             train_running_loss += loss.item()
             train_running_correct += torch.sum(preds == bin)
 
+        if len(train_losses) > 1 and abs(train_running_loss - train_losses[-1]) <= 0.0001:
+            # early stopping
+            return train_losses, train_accuracies, val_losses, val_accuracies
+
         train_losses.append(train_running_loss)
         train_accuracies.append(train_running_correct / len(loader['train']))
 
@@ -98,6 +102,11 @@ def train(model, loader, criterion, optimizer, epochs):
             count = np.sum(prediction) / 100
             train_running_predicted.append(count)
             train_running_expected.append(len(dt['gt']))
+
+        if len(train_losses) > 1 and abs(train_running_loss - train_losses[-1]) <= 0.0001:    
+            # early stopping
+            return train_losses, train_r2, val_losses, val_r2
+
 
         train_losses.append(train_running_loss)
         train_r2.append(r2_score(train_running_expected, train_running_predicted))
