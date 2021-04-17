@@ -22,7 +22,6 @@ criterion = nn.CrossEntropyLoss()
 lr = 1e-3
 momentum = 0.9
 optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
-# optimizer = optim.Adam(model.parameters())
 
 train_losses, train_accuracies, val_losses, val_accuracies = train_classification(model, loaders, criterion, optimizer, 700)
 torch.save(model, 'saved_models/resnet_classification_final')
