@@ -124,6 +124,7 @@ def main(args):
     p1.set_ylabel('Predictions')
 
     x = np.linspace(0, max(max(val_vgg16_actual), max(val_vgg16_predictions)), 1000)
+    y = x
     p2.plot(x, y, '-r', label='Ground Truths')
     p2.scatter(val_vgg16_actual, val_vgg16_predictions, label='Validation Data')
     p2.legend()
@@ -132,6 +133,7 @@ def main(args):
     p2.set_ylabel('Predictions')
 
     x = np.linspace(0, max(max(test_vgg16_actual), max(test_vgg16_predictions)), 1000)
+    y = x
     p3.plot(x, y, '-r', label='Ground Truths')
     p3.scatter(test_vgg16_actual, test_vgg16_predictions, label='Testing Data')
     p3.legend()
