@@ -167,12 +167,12 @@ def main(args):
 
     x = np.linspace(0, max(test_ub_vgg16_actual), 1000)
     y = x
-    p3.plot(x, y, '-r', label='Ground Truths')
-    p3.scatter(test_ub_vgg16_actual, test_ub_vgg16_predictions, label='Testing (Unbalanced) Data')
-    p3.legend()
-    p3.set_title('Testing (Unbalanced) MSE: {}\n r2: {}'.format(test_ub_mse, test_ub_r2))
-    p3.set_xlabel('Actual')
-    p3.set_ylabel('Predictions')
+    p4.plot(x, y, '-r', label='Ground Truths')
+    p4.scatter(test_ub_vgg16_actual, test_ub_vgg16_predictions, label='Testing (Unbalanced) Data')
+    p4.legend()
+    p4.set_title('Testing (Unbalanced) MSE: {}\n r2: {}'.format(test_ub_mse, test_ub_r2))
+    p4.set_xlabel('Actual')
+    p4.set_ylabel('Predictions')
 
     fg.savefig('results/{}_results'.format(args.model))
 
