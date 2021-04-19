@@ -112,7 +112,7 @@ def main(args):
     print('Testing MSE: {}'.format(test_mse))
 
     fg, (p1, p2, p3) = plt.subplots(1, 3, figsize=(15, 4))
-    fg.suptitle('VGG16 Transfer Learning')
+    fg.suptitle('{} Transfer Learning'.format(args.model))
 
     x = np.linspace(0, max(max(train_vgg16_actual), max(train_vgg16_predictions)), 1000)
     y = x
