@@ -114,7 +114,7 @@ def main(args):
     fg, (p1, p2, p3) = plt.subplots(1, 3, figsize=(15, 4))
     fg.suptitle('VGG16 Transfer Learning')
 
-    x = np.linspace(0,500,1000)
+    x = np.linspace(0, max(train_vgg16_actual, max(train_vgg16_predictions)), 1000)
     y = x
     p1.plot(x, y, '-r', label='Ground Truths')
     p1.scatter(train_vgg16_actual, train_vgg16_predictions, label='Training Data')
@@ -123,6 +123,7 @@ def main(args):
     p1.set_xlabel('Actual')
     p1.set_ylabel('Predictions')
 
+    x = np.linspace(0, max(val_vgg16_actual, max(val_vgg16_predictions)), 1000)
     p2.plot(x, y, '-r', label='Ground Truths')
     p2.scatter(val_vgg16_actual, val_vgg16_predictions, label='Validation Data')
     p2.legend()
@@ -130,6 +131,7 @@ def main(args):
     p2.set_xlabel('Actual')
     p2.set_ylabel('Predictions')
 
+    x = np.linspace(0, max(test_vgg16_actual, max(test_vgg16_predictions)), 1000)
     p3.plot(x, y, '-r', label='Ground Truths')
     p3.scatter(test_vgg16_actual, test_vgg16_predictions, label='Testing Data')
     p3.legend()
