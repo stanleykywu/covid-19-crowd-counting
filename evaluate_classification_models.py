@@ -5,7 +5,7 @@ import torch
 from data import CrowdClassificationDataSet 
 from data import default_train_transform_classification, default_val_transform_classification
 import argparse
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 
 
 def run_argparse():
@@ -94,37 +94,34 @@ def main(args):
     print('================================')
 
     fg, (p1, p2, p3) = plt.subplots(1, 3, figsize=(15, 4))
-    labels = [0, 1, 2, 3, 4]
-    cm = confusion_matrix(train_vgg16_actual, train_vgg16_predictions, labels=labels)
-    ax = p1.add_subplot(111)
-    cax = ax.matshow(cm)
-    p1.title('Confusion matrix on Training')
-    p1.colorbar(cax)
-    ax.set_xticklabels([''] + labels)
-    ax.set_yticklabels([''] + labels)
-    p1.ylabel('Actual')
-    p1.xlabel('Predicted')
-    
-    cm = confusion_matrix(val_vgg16_actual, val_vgg16_predictions, labels=labels)
-    ax = p1.add_subplot(111)
-    cax = ax.matshow(cm)
-    p2.title('Confusion matrix on Validation')
-    p2.colorbar(cax)
-    ax.set_xticklabels([''] + labels)
-    ax.set_yticklabels([''] + labels)
-    p2.ylabel('Actual')
-    p2.xlabel('Predicted')
-    
-    cm = confusion_matrix(test_vgg16_actual, test_vgg16_predictions, labels=labels)
-    ax = p1.add_subplot(111)
-    cax = ax.matshow(cm)
-    p3.title('Confusion matrix on Testing')
-    p3.colorbar(cax)
-    ax.set_xticklabels([''] + labels)
-    ax.set_yticklabels([''] + labels)
-    p3.ylabel('Actual')
-    p3.xlabel('Predicted')
-    
+    cf_matrix = confusion_matrix(train_vgg16_actual, train_vgg16_predictions)
+    disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
+    disp.plot(ax=p1, xticks_rotation=45)
+    disp.ax_.set_title('Training')
+    disp.im_.colorbar.remove()
+    disp.ax_.set_xlabel('')
+
+    cf_matrix = confusion_matrix(val_vgg16_actual, val_vgg16_predictions)
+    disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
+    disp.plot(ax=p2, xticks_rotation=45)
+    disp.ax_.set_title('Validation')
+    disp.im_.colorbar.remove()
+    disp.ax_.set_xlabel('')
+    disp.ax_.set_ylabel('')
+
+    cf_matrix = confusion_matrix(test_vgg16_actual, test_vgg16_predictions)
+    disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
+    disp.plot(ax=p3, xticks_rotation=45)
+    disp.ax_.set_title('Testing')
+    disp.im_.colorbar.remove()
+    disp.ax_.set_xlabel('')
+    disp.ax_.set_ylabel('')
+
+    fg.text(0.4, 0.1, 'Predicted label', ha='left')
+    plt.subplots_adjust(wspace=0.40, hspace=0.1)
+
+
+    fg.colorbar(disp.im_, ax=(p1, p2, p3))
     fg.savefig('results/{}_results'.format(args.model))
     
 if __name__=='__main__':
