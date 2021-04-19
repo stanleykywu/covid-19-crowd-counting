@@ -42,7 +42,7 @@ def train_classification(model, loader, criterion, optimizer, epochs):
         train_losses.append(train_running_loss)
         train_accuracies.append(train_running_correct / len(loader['train']))
 
-        limit = len(loader['val'] / 2)
+        limit = len(loader['val']) / 2
         for i, data in enumerate(loader['val'], 0):
             if i >= limit: break
             model.eval()
@@ -113,7 +113,7 @@ def train(model, loader, criterion, optimizer, epochs):
         train_losses.append(train_running_loss)
         train_r2.append(r2_score(train_running_expected, train_running_predicted))
 
-        limit = len(loader['val'] / 2)
+        limit = len(loader['val']) / 2
         for i, data in enumerate(loader['val'], 0):
             if i >= limit: break
             model.eval()
