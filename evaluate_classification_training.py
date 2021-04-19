@@ -5,7 +5,7 @@ import torch
 from data import CrowdClassificationDataSet 
 from data import default_train_transform_classification, default_val_transform_classification
 import argparse
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 
 
 def run_argparse():
@@ -89,6 +89,21 @@ def main(args):
     print('Validation Accuracy: {}'.format(val_acc))
     print('Testing Accuracy: {}'.format(test_acc))
     print('================================')
+
+    fg, (p1, p2, p3) = plt.subplots(1, 3, figsize=(15, 4))
+    labels = [0, 1, 2, 3, 4]
+    cm = confusion_matrix(y_test, log_r.predict(X_test), labels=labels)
+    print(cm)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(cm)
+    plt.title('Confusion matrix for Logistic Regression on Spam (1) Classification')
+    fig.colorbar(cax)
+    ax.set_xticklabels([''] + labels)
+    ax.set_yticklabels([''] + labels)
+    plt.ylabel('Actual')
+    plt.xlabel('Predicted')
+    plt.show()
     
 if __name__=='__main__':
     args = run_argparse()
