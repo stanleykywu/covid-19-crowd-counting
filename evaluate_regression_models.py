@@ -59,7 +59,7 @@ def main(args):
         train_vgg16_predictions.append(count)
         train_vgg16_actual.append(np.sum(k))
 
-    limit = len(loaders['val']) / 2
+    limit = int(len(loaders['val']) / 2)
     print('Evaluating Validation...')
     for i, data in enumerate(loaders['val'], 0):
         if i >= limit: break
