@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
-from data import CrowdDataSet 
+from data import CrowdClassificationDataSet 
 from data import default_train_transform_classification, default_val_transform_classification
 import argparse
-from sklearn.metrics import accuracy_score, 
+from sklearn.metrics import accuracy_score
 
 
 def run_argparse():
@@ -16,13 +16,13 @@ def run_argparse():
 
 def main(args):
     loaders = {
-        "train": CrowdDataSet(
+        "train": CrowdClassificationDataSet(
             'part_A/train_data', default_train_transform_classification()
         ),
-        "val": CrowdDataSet(
+        "val": CrowdClassificationDataSet(
             'part_A/test_data', default_val_transform_classification()
         ),
-        "test": CrowdDataSet(
+        "test": CrowdClassificationDataSet(
             'part_B/test_data', default_val_transform_classification()
         )
     }
@@ -79,8 +79,16 @@ def main(args):
         test_vgg16_predictions.append(preds)
         test_vgg16_actual.append(expected)
 
+    train_acc = accuracy_score(train_vgg16_actual, train_vgg16_predictions)
+    val_acc = accuracy_score(val_vgg16_actual, val_vgg16_predictions)
+    test_acc = accuracy_score(test_vgg16_actual, test_vgg16_predictions)
     
-
+    print("{}".format(args.model))
+    print('================================')
+    print('Training Accuracy: {}'.format(train_acc))
+    print('Validation Accuracy: {}'.format(val_acc))
+    print('Testing Accuracy: {}'.format(test_acc))
+    print('================================')
     
 if __name__=='__main__':
     args = run_argparse()

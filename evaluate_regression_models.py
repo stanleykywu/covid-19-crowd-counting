@@ -101,7 +101,7 @@ def main(args):
     val_mse = mean_squared_error(val_vgg16_actual, val_vgg16_predictions)
     test_mse = mean_squared_error(test_vgg16_actual, test_vgg16_predictions)
 
-    print("VGG16")
+    print("{}".format(args.model))
     print('================================')
     print('Training r2: {}'.format(train_r2))
     print('Validation r2: {}'.format(val_r2))
