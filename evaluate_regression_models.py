@@ -25,7 +25,7 @@ def main(args):
             'part_A/test_data', default_val_transforms()
         ),
         "test": CrowdDataSet(
-            'part_B/test_data', default_val_transforms()
+            'part_B/train_data', default_val_transforms()
         )
     }
 
