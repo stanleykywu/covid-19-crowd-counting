@@ -114,7 +114,7 @@ def main(args):
     fg, (p1, p2, p3) = plt.subplots(1, 3, figsize=(15, 4))
     fg.suptitle('VGG16 Transfer Learning')
 
-    x = np.linspace(0, max(max(train_vgg16_actual)), max(train_vgg16_predictions)), 1000)
+    x = np.linspace(0, max(max(train_vgg16_actual), max(train_vgg16_predictions)), 1000)
     y = x
     p1.plot(x, y, '-r', label='Ground Truths')
     p1.scatter(train_vgg16_actual, train_vgg16_predictions, label='Training Data')
