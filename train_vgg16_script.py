@@ -16,7 +16,7 @@ loaders = {
     )
 }
 
-model = VGG16Transfer(scale_factor=32) 
+model = VGG16Transfer() 
 criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)

@@ -16,11 +16,11 @@ loaders = {
     )
 }
 
-model = ResNetTransfer(scale_factor=32) 
+model = ResNetTransfer() 
 criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 700)
-torch.save(model, 'saved_models/resnet18_adaptive')
-np.save(f"loss_experiments/resnet18_adaptive_losses", (train_losses, train_r2, val_losses, val_r2))
+train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 1)
+torch.save(model, 'saved_models/resnet50_density_map')
+np.save(f"loss_experiments/resnet50denmap/resnet50_adaptive_losses", (train_losses, train_r2, val_losses, val_r2))
