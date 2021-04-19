@@ -95,6 +95,7 @@ def main(args):
 
     fg, (p1, p2, p3) = plt.subplots(1, 3, figsize=(15, 4))
     cf_matrix = confusion_matrix(train_vgg16_actual, train_vgg16_predictions)
+    print(cf_matrix)
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p1)
     disp.ax_.set_title('Training')
@@ -102,6 +103,7 @@ def main(args):
     disp.ax_.set_xlabel('')
 
     cf_matrix = confusion_matrix(val_vgg16_actual, val_vgg16_predictions)
+    print(cf_matrix)
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p2)
     disp.ax_.set_title('Validation')
@@ -110,6 +112,7 @@ def main(args):
     disp.ax_.set_ylabel('')
 
     cf_matrix = confusion_matrix(test_vgg16_actual, test_vgg16_predictions)
+    print(cf_matrix)
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p3)
     disp.ax_.set_title('Testing')
