@@ -119,7 +119,7 @@ def main(args):
     p1.plot(x, y, '-r', label='Ground Truths')
     p1.scatter(train_vgg16_actual, train_vgg16_predictions, label='Training Data')
     p1.legend()
-    p1.set_title('Training MSE: {}, r2: {}'.format(train_mse, train_r2))
+    p1.set_title('Training MSE: {}\n r2: {}'.format(train_mse, train_r2))
     p1.set_xlabel('Actual')
     p1.set_ylabel('Predictions')
 
@@ -127,7 +127,7 @@ def main(args):
     p2.plot(x, y, '-r', label='Ground Truths')
     p2.scatter(val_vgg16_actual, val_vgg16_predictions, label='Validation Data')
     p2.legend()
-    p2.set_title('Validation MSE: {}, r2: {}'.format(val_mse, val_r2))
+    p2.set_title('Validation MSE: {}\n r2: {}'.format(val_mse, val_r2))
     p2.set_xlabel('Actual')
     p2.set_ylabel('Predictions')
 
@@ -135,7 +135,7 @@ def main(args):
     p3.plot(x, y, '-r', label='Ground Truths')
     p3.scatter(test_vgg16_actual, test_vgg16_predictions, label='Testing Data')
     p3.legend()
-    p3.set_title('Testing MSE: {}, r2: {}'.format(test_mse, test_r2))
+    p3.set_title('Testing MSE: {}\n r2: {}'.format(test_mse, test_r2))
     p3.set_xlabel('Actual')
     p3.set_ylabel('Predictions')
 
