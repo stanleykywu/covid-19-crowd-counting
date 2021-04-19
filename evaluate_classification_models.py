@@ -22,8 +22,8 @@ def main(args):
         "val": CrowdClassificationDataSet(
             'part_A/test_data', default_val_transform_classification()
         ),
-        "test": CrowdClassificationDataSet(
-            'part_B/train_data', default_val_transform_classification()
+        "test_unbalanced": CrowdClassificationDataSet(
+            'part_B/test_data', default_val_transform_classification()
         )
     }
 
@@ -34,8 +34,10 @@ def main(args):
     train_vgg16_actual = []
     val_vgg16_predictions = []
     val_vgg16_actual = []
-    test_vgg16_predictions = []
-    test_vgg16_actual = []
+    test_b_vgg16_predictions = []
+    test_b_vgg16_actual = []
+    test_ub_vgg16_predictions = []
+    test_ub_vgg16_actual = []
 
     print('Evaluating Training...')
     for i, data in enumerate(loaders['train'], 0):
@@ -52,8 +54,10 @@ def main(args):
         train_vgg16_predictions.append(preds)
         train_vgg16_actual.append(expected)
 
+    limit = len(loaders['val']) / 2
     print('Evaluating Validation...')
     for i, data in enumerate(loaders['val'], 0):
+        if i >= limit: break
         dt = data
 
         image = dt['image'].to()
@@ -67,8 +71,8 @@ def main(args):
         val_vgg16_predictions.append(preds)
         val_vgg16_actual.append(expected)
 
-    print('Evaluating Testing...')
-    for i, data in enumerate(loaders['test'], 0):
+    print('Evaluating Testing Balanced...')
+    for i, data in enumerate(loaders['val'], limit):
         dt = data
 
         image = dt['image'].to()
@@ -79,21 +83,38 @@ def main(args):
         expected = torch.Tensor([bin]).type(torch.LongTensor)
         _, preds = torch.max(outputs, 1)
             
-        test_vgg16_predictions.append(preds)
-        test_vgg16_actual.append(expected)
+        test_b_vgg16_predictions.append(preds)
+        test_b_vgg16_actual.append(expected)
+
+    print('Evaluating Testing Unbalanced...')
+    for i, data in enumerate(loaders['test_unbalanced'], 0):
+        dt = data
+
+        image = dt['image'].to()
+        bin = dt['bin']
+        
+        model.eval()
+        outputs = model(image[None, ...].float())
+        expected = torch.Tensor([bin]).type(torch.LongTensor)
+        _, preds = torch.max(outputs, 1)
+            
+        test_ub_vgg16_predictions.append(preds)
+        test_ub_vgg16_actual.append(expected)
 
     train_acc = accuracy_score(train_vgg16_actual, train_vgg16_predictions)
     val_acc = accuracy_score(val_vgg16_actual, val_vgg16_predictions)
-    test_acc = accuracy_score(test_vgg16_actual, test_vgg16_predictions)
+    test_b_acc = accuracy_score(test_b_vgg16_actual, test_b_vgg16_predictions)
+    test_ub_acc = accuracy_score(test_ub_vgg16_actual, test_ub_vgg16_predictions)
     
     print("{}".format(args.model))
     print('================================')
     print('Training Accuracy: {}'.format(train_acc))
     print('Validation Accuracy: {}'.format(val_acc))
-    print('Testing Accuracy: {}'.format(test_acc))
+    print('Testing (Balanced) Accuracy: {}'.format(test_b_acc))
+    print('Testing (Unbalanced) Accuracy: {}'.format(test_ub_acc))
     print('================================')
 
-    fg, (p1, p2, p3) = plt.subplots(1, 3, figsize=(15, 4))
+    fg, (p1, p2, p3, p4) = plt.subplots(1, 4, figsize=(15, 4))
     cf_matrix = confusion_matrix(train_vgg16_actual, train_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p1)
@@ -109,10 +130,18 @@ def main(args):
     disp.ax_.set_xlabel('')
     disp.ax_.set_ylabel('')
 
-    cf_matrix = confusion_matrix(test_vgg16_actual, test_vgg16_predictions, labels=[0, 1, 2, 3, 4])
+    cf_matrix = confusion_matrix(test_b_vgg16_actual, test_b_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p3)
-    disp.ax_.set_title('Testing')
+    disp.ax_.set_title('Testing (Balanced')
+    disp.im_.colorbar.remove()
+    disp.ax_.set_xlabel('')
+    disp.ax_.set_ylabel('')
+
+    cf_matrix = confusion_matrix(test_ub_vgg16_actual, test_ub_vgg16_predictions, labels=[0, 1, 2, 3, 4])
+    disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
+    disp.plot(ax=p4)
+    disp.ax_.set_title('Testing (Unbalanced')
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
     disp.ax_.set_ylabel('')
@@ -121,7 +150,7 @@ def main(args):
     plt.subplots_adjust(wspace=0.40, hspace=0.1)
 
 
-    fg.colorbar(disp.im_, ax=(p1, p2, p3))
+    fg.colorbar(disp.im_, ax=(p1, p2, p3, p4))
     fg.savefig('results/{}_results'.format(args.model))
     
 if __name__=='__main__':
