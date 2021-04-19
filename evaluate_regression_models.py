@@ -143,7 +143,7 @@ def main(args):
     p1.plot(x, y, '-r', label='Ground Truths')
     p1.scatter(train_vgg16_actual, train_vgg16_predictions, label='Training Data')
     p1.legend()
-    p1.set_title('Training MSE: {}\n r2: {}'.format(train_mse, train_r2))
+    p1.set_title('Training MSE: {:.2f}\n r2: {:.2f}'.format(train_mse, train_r2))
     p1.set_xlabel('Actual')
     p1.set_ylabel('Predictions')
 
@@ -152,7 +152,7 @@ def main(args):
     p2.plot(x, y, '-r', label='Ground Truths')
     p2.scatter(val_vgg16_actual, val_vgg16_predictions, label='Validation Data')
     p2.legend()
-    p2.set_title('Validation MSE: {}\n r2: {}'.format(val_mse, val_r2))
+    p2.set_title('Validation MSE: {:.2f}\n r2: {:.2f}'.format(val_mse, val_r2))
     p2.set_xlabel('Actual')
     p2.set_ylabel('Predictions')
 
@@ -161,7 +161,7 @@ def main(args):
     p3.plot(x, y, '-r', label='Ground Truths')
     p3.scatter(test_b_vgg16_actual, test_b_vgg16_predictions, label='Testing (Balanced) Data')
     p3.legend()
-    p3.set_title('Testing (Balanced) MSE: {}\n r2: {}'.format(test_b_mse, test_b_r2))
+    p3.set_title('Testing (Balanced) MSE: {:.2f}\n r2: {:.2f}'.format(test_b_mse, test_b_r2))
     p3.set_xlabel('Actual')
     p3.set_ylabel('Predictions')
 
@@ -170,7 +170,7 @@ def main(args):
     p4.plot(x, y, '-r', label='Ground Truths')
     p4.scatter(test_ub_vgg16_actual, test_ub_vgg16_predictions, label='Testing (Unbalanced) Data')
     p4.legend()
-    p4.set_title('Testing (Unbalanced) MSE: {}\n r2: {}'.format(test_ub_mse, test_ub_r2))
+    p4.set_title('Testing (Unbalanced) MSE: {:.2f}\n r2: {:.2f}'.format(test_ub_mse, test_ub_r2))
     p4.set_xlabel('Actual')
     p4.set_ylabel('Predictions')
 
