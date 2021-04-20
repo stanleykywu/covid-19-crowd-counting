@@ -34,10 +34,12 @@ plt.xlabel('Number of Epochs')
 plt.ylabel('Loss')
 plt.savefig('loss_experiments/resnet50denmap/resnet50_regression_loss_plots')
 
+print(val_r2)
+print(train_r2)
 
 plt.close()
 plt.plot(x_data, train_r2, label='Training Set r2')
-plt.plot(x_data, train_r2, label='Validation Set r2')
+plt.plot(x_data, val_r2, label='Validation Set r2')
 plt.legend()
 plt.xlabel('Number of Epochs')
 plt.ylabel('r2')
