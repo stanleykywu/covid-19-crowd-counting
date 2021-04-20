@@ -5,7 +5,7 @@ import torch
 from data import CrowdClassificationDataSet 
 from data import default_train_transform_classification, default_val_transform_classification
 import argparse
-from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, f1_score
 
 
 def run_argparse():
@@ -105,6 +105,11 @@ def main(args):
     val_acc = accuracy_score(val_vgg16_actual, val_vgg16_predictions)
     test_b_acc = accuracy_score(test_b_vgg16_actual, test_b_vgg16_predictions)
     test_ub_acc = accuracy_score(test_ub_vgg16_actual, test_ub_vgg16_predictions)
+
+    train_f1 = f1_score(train_vgg16_actual, train_vgg16_predictions)
+    val_f1 = f1_score(val_vgg16_actual, val_vgg16_predictions)
+    test_b_f1 = f1_score(test_b_vgg16_actual, test_b_vgg16_predictions)
+    test_ub_f1 = f1_score(test_ub_vgg16_actual, test_ub_vgg16_predictions)
     
     print("{}".format(args.model))
     print('================================')
@@ -118,14 +123,14 @@ def main(args):
     cf_matrix = confusion_matrix(train_vgg16_actual, train_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p1)
-    disp.ax_.set_title('Training')
+    disp.ax_.set_title('Training \nAcc: {:.2f}\n f1: {:.2f}'.format(train_acc, train_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
 
     cf_matrix = confusion_matrix(val_vgg16_actual, val_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p2)
-    disp.ax_.set_title('Validation')
+    disp.ax_.set_title('Validation \nAcc: {:.2f}\n f1: {:.2f}'.format(val_acc, val_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
     disp.ax_.set_ylabel('')
@@ -133,7 +138,7 @@ def main(args):
     cf_matrix = confusion_matrix(test_b_vgg16_actual, test_b_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p3)
-    disp.ax_.set_title('Testing (Balanced)')
+    disp.ax_.set_title('Testing (Balanced) \nAcc: {:.2f}\n f1: {:.2f}'.format(test_b_acc, test_b_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
     disp.ax_.set_ylabel('')
@@ -141,7 +146,7 @@ def main(args):
     cf_matrix = confusion_matrix(test_ub_vgg16_actual, test_ub_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p4)
-    disp.ax_.set_title('Testing (Unbalanced)')
+    disp.ax_.set_title('Testing (Unbalanced) \nAcc: {:.2f}\n f1: {:.2f}'.format(test_ub_acc, test_ub_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
     disp.ax_.set_ylabel('')
