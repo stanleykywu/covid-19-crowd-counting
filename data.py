@@ -80,6 +80,11 @@ class CrowdClassificationDataSet(Dataset):
 
         return sample
 
+def default_exploration_transform(output_size=224):
+    return transforms.Compose([
+        CenterCrop(output_size=output_size),
+        ToTensor(),
+    ])
 
 def default_train_transforms(output_size=224):
     return transforms.Compose([
