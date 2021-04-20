@@ -18,7 +18,7 @@ loaders = {
 
 model = ResNetTransfer() 
 criterion = nn.MSELoss()
-lr = 1e-5
+lr = 1e-3
 optimizer = optim.ASGD(model.parameters(), lr=lr)
 
 train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 500)
