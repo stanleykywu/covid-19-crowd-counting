@@ -32,7 +32,11 @@ class ResNetTransfer(nn.Module):
             layer.requires_grad = False
 
         self.model = nn.Sequential(
-            *conv_layers,
+            # *conv_layers,
+            nn.Conv2d(3, 1024, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(1024, 2048, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
             nn.Conv2d(2048, 1024, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv2d(1024, 512, kernel_size=3, padding=1),
