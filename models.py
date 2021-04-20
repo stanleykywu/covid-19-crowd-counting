@@ -27,13 +27,10 @@ class ResNetTransfer(nn.Module):
     def __init__(self):
         super(ResNetTransfer, self).__init__()
         
-        conv_layers = list(models.resnext50_32x4d(pretrained=True).children())[:8]
+        conv_layers = list(models.resnet18(pretrained=True).children())[:8]
         self.model = nn.Sequential(
             *conv_layers,
-            nn.Conv2d(2048, 1024, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(1024, 128, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 128, kernel_size=3, padding=1),
             nn.Conv2d(128, 1, kernel_size=3, padding=1),
             nn.ReLU(inplace=True)
         )
