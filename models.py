@@ -33,13 +33,11 @@ class ResNetTransfer(nn.Module):
 
         self.model = nn.Sequential(
             # *conv_layers,
-            nn.Conv2d(3, 1024, kernel_size=3, padding=1),
+            nn.Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False),
             nn.ReLU(inplace=True),
-            nn.Conv2d(1024, 2048, kernel_size=3, padding=1),
+            nn.Conv2d(64, 256, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(2048, 1024, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(1024, 512, kernel_size=3, padding=1),
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv2d(512, 256, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
