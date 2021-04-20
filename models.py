@@ -27,7 +27,7 @@ class ResNetTransfer(nn.Module):
     def __init__(self):
         super(ResNetTransfer, self).__init__()
         
-        conv_layers = list(models.resnet18(pretrained=True).children())[:6]
+        conv_layers = list(models.resnet18(pretrained=True).children())[:7]
         for layer in conv_layers:
             layer.requires_grad = True
 
@@ -47,9 +47,9 @@ class ResNetTransfer(nn.Module):
         #     nn.ReLU(inplace=True)
         # )
             *conv_layers,
-            nn.Conv2d(128, 64, kernel_size=3, padding=1),
+            nn.Conv2d(256, 128, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(64, 1, kernel_size=3, padding=1),
+            nn.Conv2d(128, 1, kernel_size=3, padding=1),
             nn.ReLU(inplace=True)
         )
 
