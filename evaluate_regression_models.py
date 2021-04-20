@@ -52,14 +52,9 @@ def main(args):
         predictions = model(image[None, ...].float())
         predictions = predictions.squeeze().data.cpu().numpy() 
         count = np.sum(predictions) / 100
-        
-        k = np.zeros((image.shape[0], image.shape[1]))
-        k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         train_vgg16_predictions.append(count)
         train_vgg16_actual.append(len(gt))
-
-        print(len(gt), np.sum(k))
 
     limit = int(len(loaders['val']) / 2)
     print('Evaluating Validation...')
@@ -74,9 +69,6 @@ def main(args):
         predictions = model(image[None, ...].float())
         predictions = predictions.squeeze().data.cpu().numpy() 
         count = np.sum(predictions) / 100
-        
-        k = np.zeros((image.shape[0], image.shape[1]))
-        k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         val_vgg16_predictions.append(count)
         val_vgg16_actual.append(len(gt))
@@ -92,9 +84,6 @@ def main(args):
         predictions = model(image[None, ...].float())
         predictions = predictions.squeeze().data.cpu().numpy() 
         count = np.sum(predictions) / 100
-        
-        k = np.zeros((image.shape[0], image.shape[1]))
-        k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         test_b_vgg16_predictions.append(count)
         test_b_vgg16_actual.append(len(gt))
@@ -110,18 +99,15 @@ def main(args):
         predictions = model(image[None, ...].float())
         predictions = predictions.squeeze().data.cpu().numpy() 
         count = np.sum(predictions) / 100
-        
-        k = np.zeros((image.shape[0], image.shape[1]))
-        k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         test_ub_vgg16_predictions.append(count)
         test_ub_vgg16_actual.append(len(gt))
 
     
-    train_r2 = r2_score([float(x) for x in train_vgg16_actual], [float(x) for x in train_vgg16_predictions])
-    val_r2 = r2_score([float(x) for x in val_vgg16_actual], [float(x) for x in val_vgg16_predictions])
-    test_b_r2 = r2_score([float(x) for x in test_b_vgg16_actual], [float(x) for x in test_b_vgg16_predictions])
-    test_ub_r2 = r2_score([float(x) for x in test_ub_vgg16_actual], [float(x) for x in test_ub_vgg16_predictions])
+    train_r2 = r2_score(train_vgg16_actual, train_vgg16_predictions)
+    val_r2 = r2_score(val_vgg16_actual, val_vgg16_predictions)
+    test_b_r2 = r2_score(test_b_vgg16_actual, test_b_vgg16_predictions)
+    test_ub_r2 = r2_score(test_ub_vgg16_actual, test_ub_vgg16_predictions)
     train_mse = mean_squared_error(train_vgg16_actual, train_vgg16_predictions)
     val_mse = mean_squared_error(val_vgg16_actual, val_vgg16_predictions)
     test_b_mse = mean_squared_error(test_b_vgg16_actual, test_b_vgg16_predictions)
