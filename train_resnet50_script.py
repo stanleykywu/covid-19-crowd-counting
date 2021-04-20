@@ -18,8 +18,8 @@ loaders = {
 
 model = ResNetTransfer() 
 criterion = nn.MSELoss()
-lr = 1e-3
-optimizer = optim.ASGD(model.parameters(), lr=lr)
+lr = 1e-5
+optimizer = optim.Adam(model.parameters(), lr=lr)
 
 train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 500)
 torch.save(model, 'saved_models/resnet50_density_map')
