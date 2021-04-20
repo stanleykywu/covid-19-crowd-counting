@@ -5,7 +5,7 @@ import torch
 from data import CrowdClassificationDataSet 
 from data import default_train_transform_classification, default_val_transform_classification
 import argparse
-from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, f1_score
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, f1_score, precision_score, recall_score
 
 
 def run_argparse():
@@ -110,6 +110,16 @@ def main(args):
     val_f1 = f1_score(val_vgg16_actual, val_vgg16_predictions, average='weighted')
     test_b_f1 = f1_score(test_b_vgg16_actual, test_b_vgg16_predictions, average='weighted')
     test_ub_f1 = f1_score(test_ub_vgg16_actual, test_ub_vgg16_predictions, average='weighted')
+
+    train_prec = precision_score(train_vgg16_actual, train_vgg16_predictions, average='weighted')
+    val_prec = precision_score(val_vgg16_actual, val_vgg16_predictions, average='weighted')
+    test_b_prec = precision_score(test_b_vgg16_actual, test_b_vgg16_predictions, average='weighted')
+    test_ub_prec = precision_score(test_ub_vgg16_actual, test_ub_vgg16_predictions, average='weighted')
+
+    train_recall = recall_score(train_vgg16_actual, train_vgg16_predictions, average='weighted')
+    val_recall = recall_score(val_vgg16_actual, val_vgg16_predictions, average='weighted')
+    test_b_recall = recall_score(test_b_vgg16_actual, test_b_vgg16_predictions, average='weighted')
+    test_ub_recall = recall_score(test_ub_vgg16_actual, test_ub_vgg16_predictions, average='weighted')
     
     print("{}".format(args.model))
     print('================================')
@@ -117,6 +127,21 @@ def main(args):
     print('Validation Accuracy: {}'.format(val_acc))
     print('Testing (Balanced) Accuracy: {}'.format(test_b_acc))
     print('Testing (Unbalanced) Accuracy: {}'.format(test_ub_acc))
+    print('================================')
+    print('Training f1: {}'.format(train_acc))
+    print('Validation f1: {}'.format(val_acc))
+    print('Testing (Balanced) f1: {}'.format(test_b_acc))
+    print('Testing (Unbalanced) f1: {}'.format(test_ub_acc))
+    print('================================')
+    print('Training Precision: {}'.format(train_prec))
+    print('Validation Precision: {}'.format(val_prec))
+    print('Testing (Balanced) Precision: {}'.format(test_b_prec))
+    print('Testing (Unbalanced) Precision: {}'.format(test_ub_prec))
+    print('================================')
+    print('Training Recall: {}'.format(train_recall))
+    print('Validation Recall: {}'.format(val_recall))
+    print('Testing (Balanced) Recall: {}'.format(test_b_recall))
+    print('Testing (Unbalanced) Recall: {}'.format(test_ub_recall))
     print('================================')
 
     fg, (p1, p2, p3, p4) = plt.subplots(1, 4, figsize=(15, 4))
