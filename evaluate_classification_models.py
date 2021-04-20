@@ -119,17 +119,17 @@ def main(args):
     print('Testing (Unbalanced) Accuracy: {}'.format(test_ub_acc))
     print('================================')
 
-    fg, axs = plt.subplots(2, 2, figsize=(15, 4))
+    fg, (p1, p2, p3, p4) = plt.subplots(2, 2, figsize=(15, 4))
     cf_matrix = confusion_matrix(train_vgg16_actual, train_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
-    disp.plot(ax=axs[0, 0])
+    disp.plot(ax=p1)
     disp.ax_.set_title('Training \nAcc: {:.2f}\n f1: {:.2f}'.format(train_acc, train_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
 
     cf_matrix = confusion_matrix(val_vgg16_actual, val_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
-    disp.plot(ax=axs[0, 1])
+    disp.plot(ax=p2)
     disp.ax_.set_title('Validation \nAcc: {:.2f}\n f1: {:.2f}'.format(val_acc, val_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
@@ -137,7 +137,7 @@ def main(args):
 
     cf_matrix = confusion_matrix(test_b_vgg16_actual, test_b_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
-    disp.plot(ax=axs[1, 0])
+    disp.plot(ax=p3)
     disp.ax_.set_title('Testing (Balanced) \nAcc: {:.2f}\n f1: {:.2f}'.format(test_b_acc, test_b_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
@@ -145,7 +145,7 @@ def main(args):
 
     cf_matrix = confusion_matrix(test_ub_vgg16_actual, test_ub_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
-    disp.plot(ax=axs[1, 1])
+    disp.plot(ax=p4)
     disp.ax_.set_title('Testing (Unbalanced) \nAcc: {:.2f}\n f1: {:.2f}'.format(test_ub_acc, test_ub_f1))
     disp.im_.colorbar.remove()
     disp.ax_.set_xlabel('')
@@ -155,7 +155,7 @@ def main(args):
     fg.text(0.5, 0.04, 'Predicted Label', ha='center')
     plt.subplots_adjust(wspace=0.40, hspace=0.1)
 
-    fg.colorbar(disp.im_, ax=axs)
+    fg.colorbar(disp.im_, ax=(p1, p2, p3, p4))
     fg.savefig('results/{}_results'.format(args.model))
     
 if __name__=='__main__':
