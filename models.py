@@ -29,15 +29,25 @@ class ResNetTransfer(nn.Module):
         
         conv_layers = list(models.resnet18(pretrained=True).children())[:8]
         self.model = nn.Sequential(
-            *conv_layers,
+            # *conv_layers,
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
             nn.Conv2d(512, 128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
             nn.Conv2d(128, 1, kernel_size=3, padding=1),
             nn.ReLU(inplace=True)
         )
 
     
     def forward(self, inputs):
-        return F.upsample(self.model(inputs), scale_factor=32)
+        # return F.upsample(self.model(inputs), scale_factor=32)
+        return self.model(inputs)
 
 class VGG16Classification(nn.Module):
     def __init__(self, bins=5):
