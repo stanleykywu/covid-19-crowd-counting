@@ -137,36 +137,36 @@ def main(args):
     print('Testing (Balanced) MSE: {}'.format(test_b_mse))
     print('Testing (Unbalanced) MSE: {}'.format(test_ub_mse))
 
-    fg, (p1, p2, p3, p4) = plt.subplots(1, 4, figsize=(15, 4))
+    fg, axs = plt.subplots(2, 2, figsize=(15, 4))
     x = np.linspace(0, max(train_vgg16_actual), 1000)
     y = x
-    p1.plot(x, y, '-r', label='Ground Truths')
-    p1.scatter(train_vgg16_actual, train_vgg16_predictions, label='Training Data')
-    p1.legend()
-    p1.set_title('Training\nMSE: {:.2f}\n r2: {:.2f}'.format(train_mse, train_r2))
-    p1.set_ylabel('Predictions')
+    axs[0, 0].plot(x, y, '-r', label='Ground Truths')
+    axs[0, 0].scatter(train_vgg16_actual, train_vgg16_predictions, label='Training Data')
+    axs[0, 0].legend()
+    axs[0, 0].set_title('Training\nMSE: {:.2f}\n r2: {:.2f}'.format(train_mse, train_r2))
 
     x = np.linspace(0, max(val_vgg16_actual), 1000)
     y = x
-    p2.plot(x, y, '-r', label='Ground Truths')
-    p2.scatter(val_vgg16_actual, val_vgg16_predictions, label='Validation Data')
-    p2.legend()
-    p2.set_title('Validation\nMSE: {:.2f}\n r2: {:.2f}'.format(val_mse, val_r2))
+    axs[0, 1].plot(x, y, '-r', label='Ground Truths')
+    axs[0, 1].scatter(val_vgg16_actual, val_vgg16_predictions, label='Validation Data')
+    axs[0, 1].legend()
+    axs[0, 1].set_title('Validation\nMSE: {:.2f}\n r2: {:.2f}'.format(val_mse, val_r2))
 
     x = np.linspace(0, max(test_b_vgg16_actual), 1000)
     y = x
-    p3.plot(x, y, '-r', label='Ground Truths')
-    p3.scatter(test_b_vgg16_actual, test_b_vgg16_predictions, label='Testing (Balanced) Data')
-    p3.legend()
-    p3.set_title('Testing (Balanced)\nMSE: {:.2f}\n r2: {:.2f}'.format(test_b_mse, test_b_r2))
+    axs[1, 0].plot(x, y, '-r', label='Ground Truths')
+    axs[1, 0].scatter(test_b_vgg16_actual, test_b_vgg16_predictions, label='Testing (Balanced) Data')
+    axs[1, 0].legend()
+    axs[1, 0].set_title('Testing (Balanced)\nMSE: {:.2f}\n r2: {:.2f}'.format(test_b_mse, test_b_r2))
 
     x = np.linspace(0, max(test_ub_vgg16_actual), 1000)
     y = x
-    p4.plot(x, y, '-r', label='Ground Truths')
-    p4.scatter(test_ub_vgg16_actual, test_ub_vgg16_predictions, label='Testing (Unbalanced) Data')
-    p4.legend()
-    p4.set_title('Testing (Unbalanced)\nMSE: {:.2f}\n r2: {:.2f}'.format(test_ub_mse, test_ub_r2))
-    fg.set_xlabel('Actual')
+    axs[1, 1].plot(x, y, '-r', label='Ground Truths')
+    axs[1, 1].scatter(test_ub_vgg16_actual, test_ub_vgg16_predictions, label='Testing (Unbalanced) Data')
+    axs[1, 1].legend()
+    axs[1, 1].set_title('Testing (Unbalanced)\nMSE: {:.2f}\n r2: {:.2f}'.format(test_ub_mse, test_ub_r2))
+    fg.text(0.04, 0.5, 'Predicted', va='center', rotation='vertical')
+    fg.text(0.5, 0.04, 'Actual', ha='center')
 
     fg.savefig('results/{}_results'.format(args.model))
 
