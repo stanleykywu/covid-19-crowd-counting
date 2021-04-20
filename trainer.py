@@ -105,6 +105,8 @@ def train(model, loader, criterion, optimizer, epochs):
             train_running_predicted.append(count)
             train_running_expected.append(len(dt['gt']))
 
+            print(count, len(dt['gt']))
+
         if len(train_losses) > 1 and abs(train_running_loss - train_losses[-1]) <= 0.1:    
             # early stopping
             return train_losses, train_r2, val_losses, val_r2
