@@ -106,10 +106,10 @@ def main(args):
     test_b_acc = accuracy_score(test_b_vgg16_actual, test_b_vgg16_predictions)
     test_ub_acc = accuracy_score(test_ub_vgg16_actual, test_ub_vgg16_predictions)
 
-    train_f1 = f1_score(train_vgg16_actual, train_vgg16_predictions)
-    val_f1 = f1_score(val_vgg16_actual, val_vgg16_predictions)
-    test_b_f1 = f1_score(test_b_vgg16_actual, test_b_vgg16_predictions)
-    test_ub_f1 = f1_score(test_ub_vgg16_actual, test_ub_vgg16_predictions)
+    train_f1 = f1_score(train_vgg16_actual, train_vgg16_predictions, average='micro')
+    val_f1 = f1_score(val_vgg16_actual, val_vgg16_predictions, average='micro')
+    test_b_f1 = f1_score(test_b_vgg16_actual, test_b_vgg16_predictions, average='micro')
+    test_ub_f1 = f1_score(test_ub_vgg16_actual, test_ub_vgg16_predictions, average='micro')
     
     print("{}".format(args.model))
     print('================================')
