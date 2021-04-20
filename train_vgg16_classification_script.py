@@ -24,7 +24,7 @@ momentum = 0.9
 optimizer = optim.SGD(model.parameters(), lr=lr, momentum=momentum)
 # optimizer = optim.Adam(model.parameters())
 
-train_losses, train_accuracies, val_losses, val_accuracies = train_classification(model, loaders, criterion, optimizer, 26)
+train_losses, train_accuracies, val_losses, val_accuracies = train_classification(model, loaders, criterion, optimizer, 27)
 torch.save(model, 'saved_models/vgg16_classification')
 # np.save(f"loss_experiments/vgg16_classification_losses", (train_losses, train_accuracies, val_losses, val_accuracies))
 
