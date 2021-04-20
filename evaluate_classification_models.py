@@ -119,7 +119,7 @@ def main(args):
     print('Testing (Unbalanced) Accuracy: {}'.format(test_ub_acc))
     print('================================')
 
-    fg, (p1, p2, p3, p4) = plt.subplots(2, 2, figsize=(15, 4))
+    fg, (p1, p2, p3, p4) = plt.subplots(1, 4, figsize=(15, 4))
     cf_matrix = confusion_matrix(train_vgg16_actual, train_vgg16_predictions, labels=[0, 1, 2, 3, 4])
     disp = ConfusionMatrixDisplay(cf_matrix, display_labels=[0, 1, 2, 3, 4])
     disp.plot(ax=p1)

@@ -137,7 +137,7 @@ def main(args):
     print('Testing (Balanced) MSE: {}'.format(test_b_mse))
     print('Testing (Unbalanced) MSE: {}'.format(test_ub_mse))
 
-    fg, (p1, p2, p3, p4) = plt.subplots(2, 2, figsize=(15, 4))
+    fg, (p1, p2, p3, p4) = plt.subplots(1, 4, figsize=(15, 4))
     x = np.linspace(0, max(train_vgg16_actual), 1000)
     y = x
     p1.plot(x, y, '-r', label='Ground Truths')
