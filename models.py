@@ -34,12 +34,7 @@ class ResNetTransfer(nn.Module):
             nn.ReLU(inplace=True),
             nn.Conv2d(64, 128, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(256, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 128, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
+            nn.MaxPool2d(3, stride=2),
             nn.Conv2d(128, 1, kernel_size=3, padding=1),
             nn.ReLU(inplace=True)
         )
