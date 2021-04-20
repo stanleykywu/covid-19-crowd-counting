@@ -57,7 +57,9 @@ def main(args):
         k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         train_vgg16_predictions.append(count)
-        train_vgg16_actual.append(np.sum(k))
+        train_vgg16_actual.append(len(gt))
+
+        print(len(gt), np.sum(k))
 
     limit = int(len(loaders['val']) / 2)
     print('Evaluating Validation...')
@@ -77,7 +79,7 @@ def main(args):
         k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         val_vgg16_predictions.append(count)
-        val_vgg16_actual.append(np.sum(k))
+        val_vgg16_actual.append(len(gt))
 
     print('Evaluating Testing (Balanced)...')
     for i, data in enumerate(loaders['val'], limit):
@@ -95,7 +97,7 @@ def main(args):
         k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         test_b_vgg16_predictions.append(count)
-        test_b_vgg16_actual.append(np.sum(k))
+        test_b_vgg16_actual.append(len(gt))
 
     print('Evaluating Testing (Unbalanced)...')
     for i, data in enumerate(loaders['test_unbalanced'], 0):
@@ -113,7 +115,7 @@ def main(args):
         k = get_density_map_gaussian(k, gt, adaptive_mode=False)
             
         test_ub_vgg16_predictions.append(count)
-        test_ub_vgg16_actual.append(np.sum(k))
+        test_ub_vgg16_actual.append(len(gt))
 
     
     train_r2 = r2_score([float(x) for x in train_vgg16_actual], [float(x) for x in train_vgg16_predictions])
