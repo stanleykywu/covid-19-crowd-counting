@@ -21,6 +21,6 @@ criterion = nn.MSELoss()
 lr = 1e-5
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 20)
+train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 16)
 torch.save(model, 'saved_models/resnet18_density_map')
-np.save(f"loss_experiments/resnet18denmap/resnet18_losses", (train_losses, train_r2, val_losses, val_r2))
+# np.save(f"loss_experiments/resnet18denmap/resnet18_losses", (train_losses, train_r2, val_losses, val_r2))
