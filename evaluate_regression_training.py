@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 # plt.savefig('loss_experiments/vgg16_regression_r2_plots')
 
 
-dt = np.load('loss_experiments/resnet18denmap/resnet18_losses.npy')
+dt = np.load('loss_experiments/baseline_denmap/baseline_den_losses.npy')
 (train_losses, train_r2, val_losses, val_r2) = dt
 x_data = np.arange(len(train_losses))
 
@@ -32,7 +32,7 @@ plt.plot(x_data, val_losses, label='Validation MSE Loss')
 plt.legend()
 plt.xlabel('Number of Epochs')
 plt.ylabel('Loss')
-plt.savefig('loss_experiments/resnet18denmap/resnet18_regression_loss_plots')
+plt.savefig('loss_experiments/baseline_denmap/baseline_regression_loss_plots')
 
 print(val_r2)
 print(train_r2)
@@ -43,4 +43,4 @@ plt.plot(x_data, val_r2, label='Validation Set r2')
 plt.legend()
 plt.xlabel('Number of Epochs')
 plt.ylabel('r2')
-plt.savefig('loss_experiments/resnet18denmap/resnet18_regression_r2_plots')
+plt.savefig('loss_experiments/baseline_denmap/baseline_regression_r2_plots')
