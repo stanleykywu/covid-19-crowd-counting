@@ -23,25 +23,27 @@ class VGG16Transfer(nn.Module):
         return F.upsample(self.model(inputs), scale_factor=32)
 
 
-class ResNetTransfer(nn.Module):
+class BaselineDenMap(nn.Module):
     def __init__(self):
-        super(ResNetTransfer, self).__init__()
+        super(BaselineDenMap, self).__init__()
         
-        conv_layers = list(models.resnet18(pretrained=True).children())[:8]
         self.model = nn.Sequential(
-            # *conv_layers,
             nn.Conv2d(3, 64, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv2d(64, 128, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
-            # nn.MaxPool2d(3, stride=2),
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
             nn.Conv2d(128, 1, kernel_size=3, padding=1),
             nn.ReLU(inplace=True)
         )
 
     
     def forward(self, inputs):
-        # return F.upsample(self.model(inputs), scale_factor=32)
         return self.model(inputs)
 
 class VGG16Classification(nn.Module):
