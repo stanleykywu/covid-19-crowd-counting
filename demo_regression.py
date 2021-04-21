@@ -16,7 +16,7 @@ loaders = {
     ),
 }
 
-model = torch.load('saved_models/resnet50_density_map')
+model = torch.load('saved_models/resnet18_density_map')
 model.eval()
 
 fg, axs = plt.subplots(3, 3, figsize=(20, 20))
@@ -40,4 +40,4 @@ for index, i in enumerate([3, 50, 78]):
     axs[index, 2].imshow(k, cmap=plt.cm.jet)
     axs[index, 2].set_title('Actual Density Map\nCount: {}'.format(len(gt)), fontsize=15)
     
-fg.savefig('results/resnet50_den_map_demo')
+fg.savefig('results/resnet18_den_map_demo')

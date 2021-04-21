@@ -1,7 +1,7 @@
 from data import CrowdDataSet 
 from data import default_train_transforms, default_val_transforms 
 import numpy as np
-from models import ResNetTransfer
+from models import BaselineDenMap
 from trainer import train
 import torch.optim as optim
 import torch.nn as nn
@@ -16,11 +16,11 @@ loaders = {
     )
 }
 
-model = ResNetTransfer() 
+model = BaselineDenMap() 
 criterion = nn.MSELoss()
 lr = 1e-3
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 16)
-torch.save(model, 'saved_models/resnet18_density_map')
-# np.save(f"loss_experiments/resnet18denmap/resnet18_losses", (train_losses, train_r2, val_losses, val_r2))
+train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 200)
+torch.save(model, 'saved_models/baseline_den_map')
+np.save(f"loss_experiments/baseline_dennmap/baseline_den_losses", (train_losses, train_r2, val_losses, val_r2))
