@@ -18,9 +18,9 @@ loaders = {
 
 model = BaselineDenMap() 
 criterion = nn.MSELoss()
-lr = 1e-2
+lr = 1e-3
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
 train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 200)
 torch.save(model, 'saved_models/baseline_den_map')
-np.save(f"loss_experiments/baseline_dennmap/baseline_den_losses", (train_losses, train_r2, val_losses, val_r2))
+np.save(f"loss_experiments/baseline_denmap/baseline_den_losses", (train_losses, train_r2, val_losses, val_r2))
