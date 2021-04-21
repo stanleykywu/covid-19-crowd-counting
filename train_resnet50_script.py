@@ -18,9 +18,9 @@ loaders = {
 
 model = ResNetTransfer() 
 criterion = nn.MSELoss()
-lr = 1e-5
+lr = 1e-6
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
-train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 200)
+train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 40)
 torch.save(model, 'saved_models/resnet50_den_map')
 np.save(f"loss_experiments/resnet50_denmap/resnet50_den_losses", (train_losses, train_r2, val_losses, val_r2))
