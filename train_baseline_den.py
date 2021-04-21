@@ -18,7 +18,7 @@ loaders = {
 
 model = BaselineDenMap() 
 criterion = nn.MSELoss()
-lr = 1e-3
+lr = 1e-2
 optimizer = optim.Adam(model.parameters(), lr=lr)
 
 train_losses, train_r2, val_losses, val_r2 = train(model, loaders, criterion, optimizer, 200)
