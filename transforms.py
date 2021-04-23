@@ -5,6 +5,7 @@ from PIL import ImageOps
 from torchvision import transforms
 
 class CenterCrop(object):
+    """Center crop to fit input to CNN"""
     def __init__(self, output_size=224, bins=False):
         self.output_size = output_size
         self.bins = bins
@@ -47,6 +48,7 @@ class CenterCrop(object):
 
 
 class RandomFlip(object):
+    """Randomly flip mirror"""
     def __init__(self, bins=False):
         self.bins = bins
 
@@ -101,10 +103,7 @@ class Normalize(object):
 
 
 class LabelNormalize(object):
-    """Normalize the density map
-    C3 Paper suggests that network converges faster when we use
-    a large number in density map (they suggest 100)
-    """
+    """Multiply density map by 100 according to C-3 Framework recommendations"""
     def __init__(self):
         return
 
