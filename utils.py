@@ -1,10 +1,5 @@
-import os
 import cv2
-import glob
-import h5py
-import math
 from scipy import spatial
-import random
 import numpy as np
 import tensorflow as tf
 import keras.backend as K
