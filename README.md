@@ -14,3 +14,6 @@ There are 4 scripts to train our models:
 
 ## Evaluating Models:
 Models can be evaluated on their saved losses using `evaluate_classification_training.py` and `evaluate_regression_training.py`. Models can also be evaluated on training/validation/testing data with `evaluate_classification_model.py --model='model_name'` and `evaluate_classification_regression_model.py --model='model_name'`
+
+## VGG16 Density Map Generation Demo
+![Alt text](results/vgg16_den_map_demo.png?raw=true)
